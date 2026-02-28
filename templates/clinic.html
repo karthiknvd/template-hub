@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meridian Medical — Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy:    #0b1f3a;
+            --navy-l:  #122847;
+            --navy-ll: #1a3560;
+            --amber:   #d4862a;
+            --amber-l: #e8a04a;
+            --amber-p: rgba(212,134,42,0.12);
+            --teal:    #2a8d8d;
+            --teal-l:  #3aafaf;
+            --cream:   #fdf8f2;
+            --cream-d: #f5ede0;
+            --white:   #ffffff;
+            --text:    #1a2e44;
+            --muted:   #6b7e94;
+            --border:  rgba(11,31,58,0.1);
+            --card:    rgba(255,255,255,0.7);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--cream); }
+        ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+
+        /* ── UTILS ── */
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+        .section { padding: 7rem 0; }
+        .eyebrow {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--amber);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .eyebrow::before {
+            content: '';
+            width: 28px; height: 2px;
+            background: var(--amber);
+            flex-shrink: 0;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 900;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(253,248,242,0.97);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 24px rgba(11,31,58,0.07);
+            padding: 0.9rem 2rem;
+        }
+        .nav-inner {
+            max-width: 1180px; margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+        .nav-logo-mark {
+            width: 36px; height: 36px;
+            background: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--amber);
+            font-weight: 700;
+            font-family: 'DM Serif Display', serif;
+            flex-shrink: 0;
+        }
+        .nav-logo-text {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: var(--navy);
+            line-height: 1;
+        }
+        .nav-logo-sub {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-cta {
+            background: var(--navy);
+            color: var(--white) !important;
+            padding: 0.65rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600 !important;
+            transition: background 0.2s !important;
+        }
+        .nav-cta:hover { background: var(--navy-ll) !important; color: var(--white) !important; }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            background: var(--navy);
+            display: flex;
+            align-items: flex-end;
+            padding: 10rem 4rem 5rem 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle pattern on hero left */
+        .hero-left::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 80%, rgba(212,134,42,0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(42,141,141,0.1) 0%, transparent 50%);
+        }
+        .hero-left::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-left-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(212,134,42,0.15);
+            border: 1px solid rgba(212,134,42,0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--amber-l);
+            margin-bottom: 2rem;
+        }
+        .hero-pill-dot {
+            width: 6px; height: 6px;
+            background: var(--amber-l);
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .hero-h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            color: var(--white);
+            line-height: 1.08;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .hero-h1 em {
+            font-style: italic;
+            color: var(--amber-l);
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.55);
+            max-width: 400px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--amber);
+            color: var(--white);
+            padding: 0.9rem 2rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.03em;
+            transition: all 0.25s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover { background: var(--amber-l); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,134,42,0.35); }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.65);
+            padding: 0.9rem 1.5rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 0.03em;
+            transition: all 0.25s;
+        }
+        .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+
+        .hero-right {
+            position: relative;
+            overflow: hidden;
+            background: var(--cream-d);
+        }
+
+        .hero-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* floating card on hero */
+        .hero-card {
+            position: absolute;
+            bottom: 3rem;
+            left: 1.5rem;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 20px 60px rgba(11,31,58,0.2);
+            min-width: 220px;
+            z-index: 2;
+            animation: floatCard 0.8s 0.3s ease both;
+        }
+        @keyframes floatCard { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+        .hero-card-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        .hero-card-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.6rem;
+            color: var(--navy);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+        .hero-card-sub {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        .hero-card-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--cream-d);
+            border-radius: 2px;
+            margin-top: 0.75rem;
+            overflow: hidden;
+        }
+        .hero-card-fill {
+            height: 100%;
+            width: 78%;
+            background: linear-gradient(90deg, var(--teal), var(--amber));
+            border-radius: 2px;
+        }
+
+        /* floating badge */
+        .hero-badge {
+            position: absolute;
+            top: 3rem;
+            right: 2rem;
+            background: var(--navy);
+            color: var(--white);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(11,31,58,0.3);
+            z-index: 2;
+            animation: floatCard 0.8s 0.5s ease both;
+        }
+        .hero-badge-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--amber-l);
+            display: block;
+            line-height: 1;
+        }
+        .hero-badge-text {
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.25rem;
+        }
+
+        /* ── SERVICES STRIP ── */
+        .services-strip {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .services-strip-inner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            divide: var(--border);
+        }
+
+        .strip-item {
+            padding: 2.5rem 2rem;
+            border-right: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: background 0.2s;
+        }
+        .strip-item:last-child { border-right: none; }
+        .strip-item:hover { background: var(--cream); }
+
+        .strip-icon {
+            width: 44px; height: 44px;
+            background: var(--amber-p);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .strip-title {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .strip-desc {
+            font-size: 0.78rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── ABOUT ── */
+        .about-section {
+            background: var(--cream);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-img-wrap {
+            position: relative;
+        }
+
+        .about-img-main {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .about-img-accent {
+            position: absolute;
+            bottom: -2rem;
+            right: -2rem;
+            width: 55%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 6px solid var(--cream);
+            box-shadow: 0 16px 48px rgba(11,31,58,0.15);
+        }
+
+        .about-years {
+            position: absolute;
+            top: 2rem;
+            left: -2rem;
+            background: var(--amber);
+            color: var(--white);
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(212,134,42,0.4);
+        }
+        .about-years-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .about-years-text {
+            font-size: 0.52rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .about-text h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 3.5vw, 3.2rem);
+            color: var(--navy);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .about-text h2 em { font-style: italic; color: var(--teal); }
+
+        .about-text p {
+            font-size: 0.97rem;
+            line-height: 1.85;
+            color: var(--muted);
+            margin-bottom: 1.1rem;
+            font-weight: 300;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .about-stat {
+            padding: 1.25rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .about-stat-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--navy);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .about-stat-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── SERVICES ── */
+        .services-section {
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .services-section .eyebrow { color: var(--amber-l); }
+        .services-section .eyebrow::before { background: var(--amber-l); }
+
+        .services-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: end;
+            margin-bottom: 4rem;
+        }
+
+        .services-header h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            color: var(--white);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .services-header h2 em { font-style: italic; color: var(--amber-l); }
+
+        .services-header p {
+            font-size: 0.97rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5px;
+            background: rgba(255,255,255,0.06);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card {
+            background: var(--navy);
+            padding: 2.5rem;
+            transition: background 0.3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--amber), var(--teal));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { background: var(--navy-ll); }
+
+        .service-icon {
+            width: 52px; height: 52px;
+            background: rgba(212,134,42,0.12);
+            border: 1px solid rgba(212,134,42,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .service-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.75;
+            font-weight: 300;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--amber-l);
+            margin-top: 1.25rem;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: gap 0.2s;
+        }
+        .service-link:hover { gap: 0.7rem; }
+
+        /* ── DOCTORS ── */
+        .doctors-section {
+            background: var(--cream);
+        }
+
+        .doctors-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .doctors-header h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            color: var(--navy);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+        }
+        .doctors-header h2 em { font-style: italic; color: var(--teal); }
+        .doctors-header p {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .doctor-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.35s;
+        }
+        .doctor-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(11,31,58,0.12);
+            border-color: var(--amber);
+        }
+
+        .doctor-photo-wrap {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .doctor-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
+            transition: all 0.5s;
+        }
+        .doctor-card:hover .doctor-photo { filter: grayscale(0%); transform: scale(1.04); }
+
+        .doctor-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--navy) 0%, transparent 55%);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .doctor-specialty {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            pointer-events: none;
+            background: var(--amber);
+            color: var(--white);
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.7rem;
+            border-radius: 2px;
+        }
+
+        .doctor-info {
+            padding: 1.25rem;
+        }
+
+        .doctor-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.15rem;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+
+        .doctor-role {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .doctor-bio {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .doctor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.85rem;
+        }
+        .doctor-tag {
+            font-size: 0.62rem;
+            font-weight: 600;
+            color: var(--muted);
+            background: var(--cream);
+            padding: 0.25rem 0.6rem;
+            border-radius: 2px;
+        }
+
+        /* ── APPOINTMENT ── */
+        .appointment-section {
+            background: var(--white);
+        }
+
+        .appointment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .appointment-left h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 3.5vw, 3.2rem);
+            color: var(--navy);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .appointment-left h2 em { font-style: italic; color: var(--amber); }
+
+        .appointment-left p {
+            font-size: 0.97rem;
+            line-height: 1.8;
+            color: var(--muted);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+
+        .appt-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .appt-feature {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .appt-feature-icon {
+            width: 40px; height: 40px;
+            background: var(--amber-p);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .appt-feature-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+        .appt-feature-desc {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* FORM */
+        .appt-form {
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
+        }
+
+        .form-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+        .form-subtitle {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+        .form-group:last-of-type { margin-bottom: 0; }
+
+        .form-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--navy);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            font-size: 0.88rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--amber);
+            box-shadow: 0 0 0 3px rgba(212,134,42,0.08);
+        }
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(107,126,148,0.5);
+        }
+        .form-textarea { resize: vertical; min-height: 80px; }
+
+        .form-submit {
+            width: 100%;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            margin-top: 1.5rem;
+            transition: all 0.25s;
+        }
+        .form-submit:hover { background: var(--navy-ll); transform: translateY(-1px); }
+
+        /* ── TESTIMONIALS ── */
+        .testimonials-section {
+            background: var(--cream-d);
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .testimonials-header h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            color: var(--navy);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+        .testimonials-header h2 em { font-style: italic; color: var(--amber); }
+        .testimonials-header p { font-size: 0.97rem; color: var(--muted); font-weight: 300; }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .testimonial-card:hover {
+            border-color: var(--amber);
+            box-shadow: 0 12px 36px rgba(11,31,58,0.08);
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-family: 'DM Serif Display', serif;
+            font-size: 5rem;
+            color: var(--amber);
+            opacity: 0.12;
+            line-height: 1;
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 0.2rem;
+            margin-bottom: 1rem;
+        }
+        .star { color: var(--amber); font-size: 0.85rem; }
+
+        .testimonial-text {
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: var(--text);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .testimonial-avatar {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--cream-d);
+            flex-shrink: 0;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--navy);
+        }
+        .testimonial-detail {
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-top: 0.1rem;
+        }
+
+        /* ── HOURS & CONTACT ── */
+        .info-section {
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+        .info-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-block {
+            padding: 3rem 2.5rem;
+            border-right: 1px solid rgba(255,255,255,0.08);
+        }
+        .info-block:last-child { border-right: none; }
+
+        .info-block h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .hours-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .hours-day { color: rgba(255,255,255,0.55); font-weight: 500; }
+        .hours-time { color: var(--amber-l); font-weight: 600; }
+        .hours-closed { color: rgba(255,255,255,0.3); font-style: italic; }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .contact-item {
+            display: flex;
+            gap: 0.85rem;
+            align-items: flex-start;
+        }
+        .contact-icon {
+            width: 36px; height: 36px;
+            background: rgba(212,134,42,0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .contact-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.2rem;
+        }
+        .contact-value {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 80%;
+            min-height: 240px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.25);
+            font-size: 2rem;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+        .map-placeholder span {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--navy-l);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .footer-brand .nav-logo { margin-bottom: 1rem; }
+        .footer-brand p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.75;
+            font-weight: 300;
+            max-width: 260px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--amber-l);
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .footer-links a {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-copy {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 0.03em;
+        }
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-legal a {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.25);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+        /* ── REVEAL ANIMATION ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .hero-left { padding: 9rem 2rem 4rem; min-height: 100vh; }
+            .about-grid, .appointment-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .about-img-accent { display: none; }
+            .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
+            .doctors-grid { grid-template-columns: 1fr 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+            .info-block { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            .services-strip-inner { grid-template-columns: 1fr 1fr; }
+            .strip-item:nth-child(2) { border-right: none; }
+        }
+
+        @media (max-width: 640px) {
+            .section { padding: 4.5rem 0; }
+            nav { padding: 1rem; }
+            .nav-links { display: none; }
+            .doctors-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .services-strip-inner { grid-template-columns: 1fr; }
+            .strip-item { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-mark">M</div>
+            <div>
+                <div class="nav-logo-text">Meridian Medical</div>
+                <div class="nav-logo-sub">Family Health Clinic</div>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#appointment" class="nav-cta">Book Appointment</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-left-content">
+            <div class="hero-pill">
+                <div class="hero-pill-dot"></div>
+                Now Accepting New Patients
+            </div>
+            <h1 class="hero-h1">
+                Your Health,<br>
+                Our <em>Commitment.</em>
+            </h1>
+            <p class="hero-desc">
+                Compassionate, comprehensive care for every stage of life.
+                Our team of experienced physicians is dedicated to your wellbeing.
+            </p>
+            <div class="hero-actions">
+                <a href="#appointment" class="btn-primary">
+                    Book Appointment
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <button class="btn-ghost">Call Us: (555) 284-0100</button>
+            </div>
+        </div>
+    </div>
+    <div class="hero-right">
+        <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=900&q=80&fit=crop" alt="Medical Team">
+        <div class="hero-card">
+            <div class="hero-card-label">Patient Satisfaction</div>
+            <div class="hero-card-value">98.4%</div>
+            <div class="hero-card-sub">Based on 2,400+ reviews</div>
+            <div class="hero-card-bar"><div class="hero-card-fill"></div></div>
+        </div>
+        <div class="hero-badge">
+            <span class="hero-badge-num">15+</span>
+            <div class="hero-badge-text">Years of<br>Excellence</div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES STRIP -->
+<div class="services-strip">
+    <div class="services-strip-inner">
+        <div class="strip-item">
+            <div class="strip-icon">🩺</div>
+            <div>
+                <div class="strip-title">General Practice</div>
+                <div class="strip-desc">Routine checkups, preventive care & chronic disease management</div>
+            </div>
+        </div>
+        <div class="strip-item">
+            <div class="strip-icon">🧬</div>
+            <div>
+                <div class="strip-title">Lab & Diagnostics</div>
+                <div class="strip-desc">On-site laboratory with same-day results for most tests</div>
+            </div>
+        </div>
+        <div class="strip-item">
+            <div class="strip-icon">📱</div>
+            <div>
+                <div class="strip-title">Telehealth</div>
+                <div class="strip-desc">Virtual consultations available 7 days a week</div>
+            </div>
+        </div>
+        <div class="strip-item">
+            <div class="strip-icon">🚑</div>
+            <div>
+                <div class="strip-title">Urgent Care</div>
+                <div class="strip-desc">Walk-in urgent care with minimal wait times</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section about-section" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-img-wrap reveal">
+                <img class="about-img-main" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=700&q=80&fit=crop" alt="Clinic Interior">
+                <img class="about-img-accent" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop" alt="Doctor Consultation">
+                <div class="about-years">
+                    <div class="about-years-num">15</div>
+                    <div class="about-years-text">Years<br>Serving</div>
+                </div>
+            </div>
+            <div class="about-text">
+                <div class="eyebrow reveal">About Meridian</div>
+                <h2 class="reveal reveal-d1">
+                    Medicine Built on<br><em>Trust & Expertise</em>
+                </h2>
+                <p class="reveal reveal-d2">
+                    Founded in 2009, Meridian Medical has been a cornerstone of family healthcare
+                    in our community. We believe every patient deserves personalized attention,
+                    cutting-edge treatment, and a compassionate approach to their health journey.
+                </p>
+                <p class="reveal reveal-d2">
+                    Our clinic combines state-of-the-art facilities with a warm, welcoming
+                    environment — because excellent care should never feel intimidating.
+                </p>
+                <div class="about-stats reveal reveal-d3">
+                    <div class="about-stat">
+                        <span class="about-stat-num">12,000+</span>
+                        <span class="about-stat-label">Patients Served</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-num">24</span>
+                        <span class="about-stat-label">Specialist Doctors</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-num">98%</span>
+                        <span class="about-stat-label">Satisfaction Rate</span>
+                    </div>
+                    <div class="about-stat">
+                        <span class="about-stat-num">3</span>
+                        <span class="about-stat-label">Clinic Locations</span>
+                    </div>
+                </div>
+                <a href="#appointment" class="btn-primary reveal reveal-d3" style="display:inline-flex;">
+                    Meet Our Team
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-section" id="services">
+    <div class="container">
+        <div class="services-header">
+            <div>
+                <div class="eyebrow reveal">What We Offer</div>
+                <h2 class="reveal reveal-d1">
+                    Complete Care<br>Under One <em>Roof</em>
+                </h2>
+            </div>
+            <p class="reveal reveal-d2">
+                From preventive screenings to complex specialty consultations,
+                Meridian Medical offers a comprehensive range of services designed
+                to keep your family healthy at every age.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">❤️</div>
+                <div class="service-name">Cardiology</div>
+                <div class="service-desc">Comprehensive heart health evaluations, ECG testing, stress tests, and ongoing cardiovascular disease management.</div>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card reveal reveal-d1">
+                <div class="service-icon">🧠</div>
+                <div class="service-name">Neurology</div>
+                <div class="service-desc">Diagnosis and treatment of neurological disorders including migraines, epilepsy, and memory-related conditions.</div>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card reveal reveal-d2">
+                <div class="service-icon">🦴</div>
+                <div class="service-name">Orthopedics</div>
+                <div class="service-desc">Joint pain, sports injuries, fractures, and musculoskeletal conditions treated with the latest techniques.</div>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">👶</div>
+                <div class="service-name">Pediatrics</div>
+                <div class="service-desc">Dedicated care for newborns through adolescents including wellness visits, immunizations, and developmental screening.</div>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card reveal reveal-d1">
+                <div class="service-icon">🔬</div>
+                <div class="service-name">Pathology & Labs</div>
+                <div class="service-desc">Comprehensive on-site diagnostics including blood panels, urinalysis, cultures, and advanced biomarker testing.</div>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+            <div class="service-card reveal reveal-d2">
+                <div class="service-icon">🏃</div>
+                <div class="service-name">Sports Medicine</div>
+                <div class="service-desc">Injury prevention, performance optimization, and rehabilitation for athletes of all levels and ages.</div>
+                <a href="#" class="service-link">Learn more →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="section doctors-section" id="doctors">
+    <div class="container">
+        <div class="doctors-header">
+            <div class="eyebrow reveal" style="justify-content:center;">Our Physicians</div>
+            <h2 class="reveal reveal-d1">Meet Your <em>Care Team</em></h2>
+            <p class="reveal reveal-d2">Board-certified specialists committed to your health and wellbeing.</p>
+        </div>
+        <div class="doctors-grid">
+            <div class="doctor-card reveal">
+                <div class="doctor-photo-wrap">
+                    <img class="doctor-photo" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80&fit=crop&crop=face" alt="Dr. Sarah Chen">
+                    <div class="doctor-overlay"></div>
+                    <div class="doctor-specialty">Cardiology</div>
+                </div>
+                <div class="doctor-info">
+                    <div class="doctor-name">Dr. Sarah Chen</div>
+                    <div class="doctor-role">Chief of Cardiology</div>
+                    <div class="doctor-bio">Board-certified cardiologist with 18 years of experience in interventional procedures and heart failure management.</div>
+                    <div class="doctor-tags">
+                        <span class="doctor-tag">Heart Failure</span>
+                        <span class="doctor-tag">Echocardiography</span>
+                    </div>
+                </div>
+            </div>
+            <div class="doctor-card reveal reveal-d1">
+                <div class="doctor-photo-wrap">
+                    <img class="doctor-photo" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop&crop=face" alt="Dr. James Okafor">
+                    <div class="doctor-overlay"></div>
+                    <div class="doctor-specialty">Pediatrics</div>
+                </div>
+                <div class="doctor-info">
+                    <div class="doctor-name">Dr. James Okafor</div>
+                    <div class="doctor-role">Head Pediatrician</div>
+                    <div class="doctor-bio">Dedicated to the health of children from birth through adolescence, with special interest in developmental disorders.</div>
+                    <div class="doctor-tags">
+                        <span class="doctor-tag">Neonatal</span>
+                        <span class="doctor-tag">Developmental</span>
+                    </div>
+                </div>
+            </div>
+            <div class="doctor-card reveal reveal-d2">
+                <div class="doctor-photo-wrap">
+                    <img class="doctor-photo" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80&fit=crop&crop=face" alt="Dr. Priya Sharma">
+                    <div class="doctor-overlay"></div>
+                    <div class="doctor-specialty">Neurology</div>
+                </div>
+                <div class="doctor-info">
+                    <div class="doctor-name">Dr. Priya Sharma</div>
+                    <div class="doctor-role">Neurologist</div>
+                    <div class="doctor-bio">Specialist in movement disorders, epilepsy, and headache medicine with a research focus on neurodegeneration.</div>
+                    <div class="doctor-tags">
+                        <span class="doctor-tag">Epilepsy</span>
+                        <span class="doctor-tag">Migraines</span>
+                    </div>
+                </div>
+            </div>
+            <div class="doctor-card reveal reveal-d3">
+                <div class="doctor-photo-wrap">
+                    <img class="doctor-photo" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80&fit=crop&crop=face" alt="Dr. Marcus Webb">
+                    <div class="doctor-overlay"></div>
+                    <div class="doctor-specialty">Orthopedics</div>
+                </div>
+                <div class="doctor-info">
+                    <div class="doctor-name">Dr. Marcus Webb</div>
+                    <div class="doctor-role">Orthopedic Surgeon</div>
+                    <div class="doctor-bio">Expert in minimally invasive joint replacement and sports injury rehabilitation with over 2,000 successful surgeries.</div>
+                    <div class="doctor-tags">
+                        <span class="doctor-tag">Joint Replacement</span>
+                        <span class="doctor-tag">Sports Injury</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- APPOINTMENT -->
+<section class="section appointment-section" id="appointment">
+    <div class="container">
+        <div class="appointment-grid">
+            <div class="appointment-left">
+                <div class="eyebrow reveal">Easy Booking</div>
+                <h2 class="reveal reveal-d1">
+                    Request an<br><em>Appointment</em>
+                </h2>
+                <p class="reveal reveal-d2">
+                    Scheduling your visit is simple. Fill out the form and our
+                    team will confirm your appointment within 2 hours during business hours.
+                </p>
+                <div class="appt-features reveal reveal-d2">
+                    <div class="appt-feature">
+                        <div class="appt-feature-icon">⚡</div>
+                        <div>
+                            <div class="appt-feature-title">Same-Day Appointments</div>
+                            <div class="appt-feature-desc">Urgent care slots available daily for immediate needs.</div>
+                        </div>
+                    </div>
+                    <div class="appt-feature">
+                        <div class="appt-feature-icon">💻</div>
+                        <div>
+                            <div class="appt-feature-title">Telehealth Available</div>
+                            <div class="appt-feature-desc">Video consultations from the comfort of your home.</div>
+                        </div>
+                    </div>
+                    <div class="appt-feature">
+                        <div class="appt-feature-icon">🔒</div>
+                        <div>
+                            <div class="appt-feature-title">Insurance Accepted</div>
+                            <div class="appt-feature-desc">We accept most major insurance plans. Call to verify.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="appt-form reveal reveal-d2">
+                <div class="form-title">Book Your Visit</div>
+                <div class="form-subtitle">We'll confirm within 2 business hours.</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" placeholder="Jane">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" placeholder="Smith">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" placeholder="(555) 000-0000">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="jane@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Department</label>
+                        <select class="form-select">
+                            <option>General Practice</option>
+                            <option>Cardiology</option>
+                            <option>Neurology</option>
+                            <option>Orthopedics</option>
+                            <option>Pediatrics</option>
+                            <option>Sports Medicine</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Preferred Date</label>
+                        <input type="date" class="form-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type of Visit</label>
+                    <select class="form-select">
+                        <option>In-Person Consultation</option>
+                        <option>Telehealth Video Call</option>
+                        <option>Follow-up Visit</option>
+                        <option>Urgent Care</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Reason for Visit</label>
+                    <textarea class="form-textarea" placeholder="Briefly describe your symptoms or reason for visit..."></textarea>
+                </div>
+                <button class="form-submit" onclick="handleFormSubmit(this)">Request Appointment →</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+    <div class="container">
+        <div class="testimonials-header">
+            <div class="eyebrow reveal" style="justify-content:center;">Patient Stories</div>
+            <h2 class="reveal reveal-d1">Trusted by <em>Thousands</em></h2>
+            <p class="reveal reveal-d2">What our patients say about their experience with Meridian Medical.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <div class="testimonial-stars">
+                    <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+                <p class="testimonial-text">"Dr. Chen identified my heart condition during a routine checkup that other doctors had missed for years. Her thoroughness and care genuinely saved my life. I can't recommend Meridian enough."</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&q=80&fit=crop&crop=face" alt="Patricia M.">
+                    <div>
+                        <div class="testimonial-name">Patricia M.</div>
+                        <div class="testimonial-detail">Patient since 2018 · Cardiology</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal reveal-d1">
+                <div class="testimonial-stars">
+                    <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+                <p class="testimonial-text">"Dr. Okafor has been our family's pediatrician for 6 years. He remembers every detail about my kids, explains everything patiently, and is always available when we need him. True gold standard."</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80&fit=crop&crop=face" alt="David R.">
+                    <div>
+                        <div class="testimonial-name">David R.</div>
+                        <div class="testimonial-detail">Patient since 2017 · Pediatrics</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal reveal-d2">
+                <div class="testimonial-stars">
+                    <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+                <p class="testimonial-text">"After my knee surgery with Dr. Webb, I was back to running marathons in 4 months. His surgical precision and the rehab team's support were extraordinary. The clinic is spotlessly clean and modern."</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&q=80&fit=crop&crop=face" alt="Lisa K.">
+                    <div>
+                        <div class="testimonial-name">Lisa K.</div>
+                        <div class="testimonial-detail">Patient since 2022 · Orthopedics</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="section info-section" id="contact">
+    <div class="container">
+        <div class="info-grid">
+            <div class="info-block">
+                <div class="eyebrow" style="margin-bottom:1.25rem;">Hours</div>
+                <h3>Clinic Hours</h3>
+                <div class="hours-list">
+                    <div class="hours-item"><span class="hours-day">Monday – Thursday</span><span class="hours-time">8:00 AM – 7:00 PM</span></div>
+                    <div class="hours-item"><span class="hours-day">Friday</span><span class="hours-time">8:00 AM – 6:00 PM</span></div>
+                    <div class="hours-item"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM – 4:00 PM</span></div>
+                    <div class="hours-item"><span class="hours-day">Sunday</span><span class="hours-closed">Closed</span></div>
+                    <div class="hours-item"><span class="hours-day">Urgent Care</span><span class="hours-time">7 Days / Walk-in</span></div>
+                </div>
+            </div>
+            <div class="info-block">
+                <div class="eyebrow" style="margin-bottom:1.25rem;">Contact</div>
+                <h3>Get in Touch</h3>
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <div class="contact-label">Phone</div>
+                            <div class="contact-value">(555) 284-0100</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📠</div>
+                        <div>
+                            <div class="contact-label">Fax</div>
+                            <div class="contact-value">(555) 284-0199</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div>
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">hello@meridianmedical.com</div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <div class="contact-label">Address</div>
+                            <div class="contact-value">1240 Wellness Blvd, Suite 300<br>Austin, TX 78701</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-block">
+                <div class="eyebrow" style="margin-bottom:1.25rem;">Find Us</div>
+                <h3>Location</h3>
+                <div class="map-placeholder" style="margin-top:1rem;">
+                    📍
+                    <span>Map Placeholder</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo" style="margin-bottom:1rem;display:inline-flex;">
+                    <div class="nav-logo-mark">M</div>
+                    <div>
+                        <div class="nav-logo-text" style="color:white;">Meridian Medical</div>
+                        <div class="nav-logo-sub">Family Health Clinic</div>
+                    </div>
+                </a>
+                <p>Providing compassionate, comprehensive healthcare to our community since 2009. Your health is our highest priority.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">General Practice</a></li>
+                    <li><a href="#">Cardiology</a></li>
+                    <li><a href="#">Neurology</a></li>
+                    <li><a href="#">Orthopedics</a></li>
+                    <li><a href="#">Pediatrics</a></li>
+                    <li><a href="#">Lab & Diagnostics</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Clinic</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Doctors</a></li>
+                    <li><a href="#">Patient Portal</a></li>
+                    <li><a href="#">Insurance</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">News & Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Patients</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Book Appointment</a></li>
+                    <li><a href="#">Telehealth</a></li>
+                    <li><a href="#">Medical Records</a></li>
+                    <li><a href="#">Billing</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© 2026 Meridian Medical. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">HIPAA Notice</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    /* ── Nav scroll ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ── Reveal on scroll ── */
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ── Form submit feedback ── */
+    function handleFormSubmit(btn) {
+        const original = btn.textContent;
+        btn.textContent = '✓ Request Received — We\'ll confirm shortly!';
+        btn.style.background = '#2a8d8d';
+        setTimeout(() => {
+            btn.textContent = original;
+            btn.style.background = '';
+        }, 4000);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Sarah Johnson</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink:      #0e1117;
+            --ink-l:    #1e2433;
+            --slate:    #2d3548;
+            --gold:     #b8924a;
+            --gold-l:   #d4a85c;
+            --gold-p:   rgba(184,146,74,0.12);
+            --muted:    #7a8299;
+            --faint:    #c8cdd9;
+            --line:     rgba(200,205,217,0.5);
+            --white:    #ffffff;
+            --off:      #f8f7f4;
+            --cream:    #f2ede6;
+        }
+
+        body { margin: 0; padding: 0; background: var(--cream); }
+
+        .resume-bg {
+            font-family: 'Figtree', sans-serif;
+            min-height: 100vh;
+            padding: 3rem 1rem;
+            background: var(--cream);
+        }
+
+        /* ── PAGE ── */
+        .resume-page {
+            max-width: 1080px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 32px 100px rgba(14,17,23,0.18);
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 1100px;
+            position: relative;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            background: var(--ink);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle texture on sidebar */
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 80% 20%, rgba(184,146,74,0.08) 0%, transparent 60%),
+                              radial-gradient(circle at 20% 80%, rgba(184,146,74,0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* big decorative letter */
+        .sidebar-deco {
+            position: absolute;
+            bottom: -2rem;
+            right: -1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.02);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* PHOTO */
+        .sidebar-photo-wrap {
+            padding: 3rem 2.5rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .photo-ring {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--gold), transparent 60%);
+            margin-bottom: 1.75rem;
+        }
+
+        #profilePhoto {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(15%) contrast(1.05);
+        }
+
+        #resumeName {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+        }
+
+        #resumeTitle {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-l);
+            margin-top: 0.6rem;
+        }
+
+        /* SIDEBAR SECTIONS */
+        .sb-section {
+            padding: 1.75rem 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sb-heading {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .sb-heading::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(184,146,74,0.3);
+        }
+
+        /* contact */
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.5;
+        }
+        .ci-icon {
+            width: 26px;
+            height: 26px;
+            background: rgba(184,146,74,0.12);
+            border: 1px solid rgba(184,146,74,0.2);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            color: var(--gold-l);
+        }
+
+        /* skills */
+        .skills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+        .skill-tag {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.35rem 0.75rem;
+            border-radius: 3px;
+            letter-spacing: 0.03em;
+            transition: all 0.2s;
+            cursor: default;
+        }
+        .skill-tag:hover {
+            background: var(--gold-p);
+            border-color: rgba(184,146,74,0.4);
+            color: var(--gold-l);
+        }
+
+        /* languages */
+        .lang-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.85rem;
+        }
+        .lang-name {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.75);
+            font-weight: 500;
+        }
+        .lang-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .lang-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+        }
+        .lang-dot.filled { background: var(--gold); }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP NAME BAR — right column only */
+        .main-header {
+            padding: 3rem 3.5rem 2.5rem;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+        }
+
+        .main-eyebrow {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.85rem;
+        }
+
+        .main-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--muted);
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        /* gold accent line on header */
+        .main-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 3.5rem;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        /* SECTIONS */
+        .main-section {
+            padding: 2.5rem 3.5rem;
+            border-bottom: 1px solid var(--line);
+        }
+        .main-section:last-child { border-bottom: none; }
+
+        .section-heading {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section-heading::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        /* PROFILE */
+        #summaryText {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.12rem;
+            line-height: 1.85;
+            color: var(--slate);
+            font-weight: 400;
+        }
+
+        /* EXPERIENCE */
+        .exp-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.25rem 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px dashed var(--line);
+            position: relative;
+        }
+        .exp-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        /* left timeline dot */
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0.4rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 0 3px rgba(184,146,74,0.15);
+        }
+
+        .exp-role {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+        .exp-company {
+            font-size: 0.78rem;
+            color: var(--muted);
+            font-weight: 500;
+            margin-top: 0.2rem;
+        }
+        .exp-date {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding: 0.25rem 0.65rem;
+            background: var(--gold-p);
+            border: 1px solid rgba(184,146,74,0.2);
+            border-radius: 3px;
+            align-self: start;
+        }
+        .exp-desc {
+            font-size: 0.84rem;
+            line-height: 1.75;
+            color: var(--muted);
+            grid-column: 1 / -1;
+            margin-top: 0.6rem;
+            font-weight: 400;
+        }
+
+        /* bullets in description */
+        .exp-bullets {
+            list-style: none;
+            margin-top: 0.6rem;
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+        .exp-bullets li {
+            font-size: 0.83rem;
+            line-height: 1.65;
+            color: var(--muted);
+            padding-left: 1.1rem;
+            position: relative;
+        }
+        .exp-bullets li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        /* EDUCATION */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .edu-card {
+            background: var(--off);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 1.25rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .edu-card:hover { border-color: var(--gold); }
+        .edu-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--gold);
+        }
+        .edu-year {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        .edu-degree {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+        .edu-school {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* CERTIFICATIONS */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .cert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.85rem 1rem;
+            background: var(--off);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--slate);
+            font-weight: 500;
+            line-height: 1.4;
+            transition: all 0.2s;
+        }
+        .cert-item:hover { border-color: var(--gold); background: var(--white); }
+        .cert-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+            margin-top: 0.3rem;
+        }
+
+        /* ── PRINT ── */
+        @media print {
+            body, .resume-bg { background: white; padding: 0; }
+            .resume-page { box-shadow: none; margin: 0; max-width: 100%; }
+        }
+
+        @media (max-width: 780px) {
+            .resume-bg { padding: 0; }
+            .resume-page { grid-template-columns: 1fr; box-shadow: none; }
+            .sidebar { padding-bottom: 1rem; }
+            .sidebar-deco { display: none; }
+            .main-section { padding: 2rem 1.75rem; }
+            .main-header { padding: 2rem 1.75rem; }
+            .exp-item::before { display: none; }
+            .edu-grid { grid-template-columns: 1fr; }
+            .cert-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="resume-bg">
+<div class="resume-page">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+        <div class="sidebar-deco">S</div>
+
+        <!-- Photo + Name -->
+        <div class="sidebar-photo-wrap">
+            <div class="photo-ring">
+                <img id="profilePhoto" src="data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='200' height='200' fill='%231e2433'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='72' fill='%23b8924a' font-family='Georgia'%3ESJ%3C/text%3E%3C/svg%3E" alt="Profile Photo">
+            </div>
+            <h1 id="resumeName">Sarah<br>Johnson</h1>
+            <p id="resumeTitle">Marketing Manager</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="sb-section">
+            <div class="sb-heading" id="contactHeading">Contact</div>
+            <div id="contactEmail" class="contact-item">
+                <span class="ci-icon">@</span>
+                sarah.johnson@email.com
+            </div>
+            <div id="contactPhone" class="contact-item">
+                <span class="ci-icon">✆</span>
+                (555) 123-4567
+            </div>
+            <div id="contactLocation" class="contact-item">
+                <span class="ci-icon">◎</span>
+                New York, NY
+            </div>
+            <div id="contactLinkedIn" class="contact-item">
+                <span class="ci-icon">in</span>
+                linkedin.com/in/sarahjohnson
+            </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="sb-section">
+            <div class="sb-heading" id="skillsHeading">Skills</div>
+            <div class="skills-wrap">
+                <span id="skill1" class="skill-tag">Digital Marketing</span>
+                <span id="skill2" class="skill-tag">Content Strategy</span>
+                <span id="skill3" class="skill-tag">SEO / SEM</span>
+                <span id="skill4" class="skill-tag">Analytics</span>
+                <span id="skill5" class="skill-tag">Team Leadership</span>
+                <span id="skill6" class="skill-tag">Brand Management</span>
+                <span id="skill7" class="skill-tag">CRM Tools</span>
+                <span id="skill8" class="skill-tag">A/B Testing</span>
+            </div>
+        </div>
+
+        <!-- Languages -->
+        <div class="sb-section">
+            <div class="sb-heading" id="languagesHeading">Languages</div>
+            <div class="lang-item" id="language1">
+                <span class="lang-name">English</span>
+                <div class="lang-dots">
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                </div>
+            </div>
+            <div class="lang-item" id="language2">
+                <span class="lang-name">Spanish</span>
+                <div class="lang-dots">
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot"></div>
+                </div>
+            </div>
+            <div class="lang-item" id="language3">
+                <span class="lang-name">French</span>
+                <div class="lang-dots">
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot filled"></div>
+                    <div class="lang-dot"></div>
+                    <div class="lang-dot"></div>
+                    <div class="lang-dot"></div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="main">
+
+        <!-- Top header -->
+        <div class="main-header">
+            <div class="main-eyebrow">Curriculum Vitae · 2026</div>
+            <p id="summaryText" class="main-tagline">Results-driven Marketing Manager with 8+ years of experience developing and executing comprehensive marketing strategies. Proven track record of increasing brand awareness, driving customer engagement, and delivering measurable ROI.</p>
+        </div>
+
+        <!-- Experience -->
+        <div class="main-section" style="padding-left: calc(3.5rem + 20px);">
+            <div class="section-heading" id="experienceHeading">Experience</div>
+
+            <div class="exp-item">
+                <div>
+                    <div id="job1Title" class="exp-role">Senior Marketing Manager</div>
+                    <div id="job1Company" class="exp-company">TechVision Inc. · New York, NY</div>
+                </div>
+                <div id="job1Date" class="exp-date">2021 — Present</div>
+                <ul class="exp-bullets" id="job1Description">
+                    <li>Led a team of 8 marketing professionals across integrated digital and brand campaigns</li>
+                    <li>Increased qualified leads by 45% and improved conversion rates by 30% through data-driven strategies</li>
+                    <li>Managed $2.4M annual marketing budget with consistent 4.2x ROI</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div>
+                    <div id="job2Title" class="exp-role">Marketing Manager</div>
+                    <div id="job2Company" class="exp-company">Digital Solutions Co. · Boston, MA</div>
+                </div>
+                <div id="job2Date" class="exp-date">2018 — 2021</div>
+                <ul class="exp-bullets" id="job2Description">
+                    <li>Grew social media following by 200% and website traffic by 150% via SEO and content marketing</li>
+                    <li>Managed multi-channel campaigns across digital and traditional platforms</li>
+                    <li>Launched 3 product campaigns that exceeded revenue targets by an average of 22%</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div>
+                    <div id="job3Title" class="exp-role">Marketing Coordinator</div>
+                    <div id="job3Company" class="exp-company">BrandCraft Agency · New York, NY</div>
+                </div>
+                <div id="job3Date" class="exp-date">2016 — 2018</div>
+                <ul class="exp-bullets" id="job3Description">
+                    <li>Coordinated marketing initiatives across multiple client accounts simultaneously</li>
+                    <li>Assisted in campaign development, content creation, and performance analysis</li>
+                    <li>Contributed to 25% increase in client retention through improved reporting cadence</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Education -->
+        <div class="main-section">
+            <div class="section-heading" id="educationHeading">Education</div>
+            <div class="edu-grid">
+                <div class="edu-card">
+                    <div id="gradDate1" class="edu-year">2016</div>
+                    <div id="degree1" class="edu-degree">Master of Business Administration</div>
+                    <div id="school1" class="edu-school">Columbia Business School</div>
+                </div>
+                <div class="edu-card">
+                    <div id="gradDate2" class="edu-year">2014</div>
+                    <div id="degree2" class="edu-degree">B.A. in Marketing</div>
+                    <div id="school2" class="edu-school">New York University</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="main-section">
+            <div class="section-heading" id="certificationsHeading">Certifications</div>
+            <div class="cert-grid">
+                <div class="cert-item">
+                    <div class="cert-dot"></div>
+                    <span id="cert1">Google Analytics Certified Professional</span>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-dot"></div>
+                    <span id="cert2">HubSpot Content Marketing Certification</span>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-dot"></div>
+                    <span id="cert3">Facebook Blueprint Certification</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+</div>
+</body>
+</html>

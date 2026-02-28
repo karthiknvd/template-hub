@@ -1,0 +1,2866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priya & Arjun — Wedding Invitation</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --maroon: #6b0f1a;
+            --maroon-d: #3e0810;
+            --maroon-l: #8b1a28;
+            --gold: #c8922a;
+            --gold-l: #e8b84b;
+            --gold-ll: #f5d78e;
+            --gold-pale: #fdf3d8;
+            --saffron: #e07b39;
+            --cream: #fdf6e9;
+            --warm: #fef9f0;
+            --border: rgba(200, 146, 42, 0.3);
+            --muted: #7a5c45;
+            --text: #2d1a0e;
+            --deep: #1a0a05;
+            --teal: #1a5c6b;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--maroon-d);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+        }
+
+        /* ── Utilities ── */
+        .gold-line {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 1.25rem auto;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            justify-content: center;
+            margin: 1.25rem 0;
+            color: var(--gold);
+            font-size: 1rem;
+            opacity: .8;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            max-width: 80px;
+            height: 1px;
+        }
+
+        .divider::before {
+            background: linear-gradient(to right, transparent, var(--gold));
+        }
+
+        .divider::after {
+            background: linear-gradient(to left, transparent, var(--gold));
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 4rem;
+            transition: all .4s;
+        }
+
+        nav.scrolled {
+            background: rgba(253, 246, 233, .97);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 20px rgba(107, 15, 26, .1);
+            padding: .85rem 4rem;
+        }
+
+        .nav-monogram {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.4rem;
+            color: var(--maroon);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.25rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: .66rem;
+            font-weight: 500;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .25s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform .25s;
+        }
+
+        .nav-links a:hover {
+            color: var(--maroon);
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-rsvp {
+            font-size: .64rem;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: white;
+            background: var(--maroon);
+            padding: .65rem 1.5rem;
+            text-decoration: none;
+            transition: all .25s;
+            border: 1px solid transparent;
+        }
+
+        .nav-rsvp:hover {
+            background: transparent;
+            border-color: var(--maroon);
+            color: var(--maroon);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--maroon-d);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .28;
+            filter: saturate(.8);
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(107, 15, 26, .55) 0%, rgba(62, 8, 16, .92) 100%);
+            pointer-events: none;
+        }
+
+        .hero-band {
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 4;
+        }
+
+        .hero-band.top {
+            top: 0;
+        }
+
+        .hero-band.bottom {
+            bottom: 0;
+        }
+
+        .hero-band-line {
+            height: 4px;
+            background: linear-gradient(to right, var(--maroon), var(--gold), var(--saffron), var(--gold), var(--maroon));
+        }
+
+        .hero-band-dots {
+            height: 14px;
+            background: repeating-linear-gradient(90deg, transparent 0, transparent 8px, rgba(200, 146, 42, .4) 8px, rgba(200, 146, 42, .4) 10px);
+        }
+
+        .hero-frame {
+            position: absolute;
+            inset: 2rem;
+            border: 1px solid rgba(200, 146, 42, .35);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .hero-frame::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid rgba(200, 146, 42, .18);
+        }
+
+        .hero-corner {
+            position: absolute;
+            z-index: 3;
+            font-size: 1.8rem;
+            line-height: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 0 8px rgba(200, 146, 42, .4));
+        }
+
+        .hero-corner.tl {
+            top: 2.5rem;
+            left: 2.5rem;
+        }
+
+        .hero-corner.tr {
+            top: 2.5rem;
+            right: 2.5rem;
+            transform: scaleX(-1);
+        }
+
+        .hero-corner.bl {
+            bottom: 2.5rem;
+            left: 2.5rem;
+            transform: scaleY(-1);
+        }
+
+        .hero-corner.br {
+            bottom: 2.5rem;
+            right: 2.5rem;
+            transform: scale(-1);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 9rem 2rem 5rem;
+            max-width: 900px;
+        }
+
+        .hero-om {
+            font-size: 3rem;
+            color: var(--gold-l);
+            margin-bottom: .75rem;
+            display: block;
+            filter: drop-shadow(0 0 12px rgba(200, 146, 42, .6));
+            animation: fadeD 1s ease both;
+        }
+
+        .hero-eyebrow {
+            font-size: .6rem;
+            letter-spacing: .5em;
+            text-transform: uppercase;
+            color: var(--gold-l);
+            margin-bottom: 1.25rem;
+            font-weight: 300;
+            animation: fadeD 1s .15s ease both;
+        }
+
+        .hero-invite {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: rgba(253, 243, 216, .65);
+            margin-bottom: 1rem;
+            animation: fadeD 1s .25s ease both;
+        }
+
+        .hero-names {
+            font-family: 'Yeseva One', serif;
+            font-size: clamp(3.8rem, 10vw, 8rem);
+            color: var(--gold-ll);
+            line-height: 1;
+            margin-bottom: .5rem;
+            text-shadow: 0 4px 40px rgba(200, 146, 42, .4);
+            animation: fadeD 1s .4s ease both;
+        }
+
+        .hero-amp {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.4rem, 3vw, 2.4rem);
+            color: var(--saffron);
+            display: block;
+            margin: .25rem 0;
+            animation: fadeD 1s .55s ease both;
+        }
+
+        .hero-tagline {
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+            font-style: italic;
+            color: rgba(253, 243, 216, .5);
+            letter-spacing: .08em;
+            margin: 1rem 0;
+            animation: fadeD 1s .65s ease both;
+        }
+
+        .hero-date-line {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.15rem;
+            font-style: italic;
+            color: rgba(253, 243, 216, .72);
+            letter-spacing: .1em;
+            margin-top: 1.5rem;
+            animation: fadeD 1s .7s ease both;
+        }
+
+        .hero-loc {
+            font-size: .64rem;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: .6rem;
+            animation: fadeD 1s .85s ease both;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5rem;
+            animation: fadeD 1s 1.2s ease both;
+        }
+
+        .scroll-arrow {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            margin: 0 auto;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .scroll-text {
+            font-size: .55rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(200, 146, 42, .5);
+        }
+
+        @keyframes fadeD {
+            from {
+                opacity: 0;
+                transform: translateY(-18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ── INFO STRIP ── */
+        .info-strip {
+            display: flex;
+            border-top: 3px solid rgba(200, 146, 42, .4);
+        }
+
+        .info-strip-item {
+            flex: 1;
+            padding: 1.85rem 2rem;
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, .2);
+            background: linear-gradient(135deg, #8b1a28 0%, #6b0f1a 100%);
+            transition: background .3s;
+        }
+
+        .info-strip-item:last-child {
+            border-right: none;
+        }
+
+        .info-strip-item:hover {
+            background: linear-gradient(135deg, #9e2035 0%, #7a1220 100%);
+        }
+
+        .info-strip-label {
+            font-size: .52rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .5);
+            margin-bottom: .4rem;
+            font-weight: 500;
+        }
+
+        .info-strip-value {
+            font-family: 'Yeseva One', serif;
+            font-size: 1rem;
+            color: var(--gold-ll);
+            line-height: 1.2;
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            padding: 6.5rem 5rem;
+        }
+
+        .container {
+            max-width: 1160px;
+            margin: 0 auto;
+        }
+
+        .section-eyebrow {
+            font-size: .58rem;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: .6rem;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-family: 'Yeseva One', serif;
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            color: var(--maroon);
+            text-align: center;
+            line-height: 1.15;
+        }
+
+        .section-sub {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.08rem;
+            font-style: italic;
+            color: var(--muted);
+            text-align: center;
+            margin-top: .5rem;
+        }
+
+        /* ── STORY ── */
+        .story-section {
+            background: var(--warm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .story-img-wrap {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+
+        .story-img-border {
+            position: absolute;
+            inset: -14px;
+            border: 2px solid var(--gold);
+            opacity: .3;
+            pointer-events: none;
+        }
+
+        .story-img-border-2 {
+            position: absolute;
+            inset: -26px;
+            border: 1px solid var(--gold);
+            opacity: .12;
+            pointer-events: none;
+        }
+
+        .story-img-main {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-img-secondary {
+            position: absolute;
+            bottom: -1.5rem;
+            right: -2rem;
+            width: 48%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 5px solid var(--cream);
+            z-index: 2;
+            box-shadow: 0 8px 30px rgba(107, 15, 26, .25);
+        }
+
+        .story-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: -1.75rem;
+            background: var(--maroon);
+            color: var(--gold-ll);
+            width: 72px;
+            height: 72px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 4px 20px rgba(107, 15, 26, .4);
+        }
+
+        .story-badge-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .story-badge-text {
+            font-size: .4rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-top: .1rem;
+        }
+
+        .story-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 1.1rem;
+        }
+
+        .story-quote {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--maroon);
+            background: rgba(200, 146, 42, .08);
+            border-left: 3px solid var(--gold);
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            line-height: 1.8;
+        }
+
+        .story-sig {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.6rem;
+            color: var(--maroon);
+            margin-top: 1.5rem;
+        }
+
+        .story-left-eyebrow {
+            font-size: .58rem;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .6rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .story-heading {
+            font-family: 'Yeseva One', serif;
+            font-size: 2rem;
+            color: var(--maroon);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        /* ── EVENTS / CEREMONIES ── */
+        .events-section {
+            background: var(--maroon-d);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .events-section .section-title {
+            color: var(--gold-ll);
+        }
+
+        .events-section .section-eyebrow {
+            color: var(--saffron);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin-top: 3.5rem;
+            border: 1px solid rgba(200, 146, 42, .25);
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-card {
+            background: rgba(62, 8, 16, .6);
+            backdrop-filter: blur(12px);
+            padding: 0 0 2.5rem;
+            text-align: center;
+            transition: background .35s;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(200, 146, 42, .15);
+        }
+
+        .event-card:last-child {
+            border-right: none;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        .event-card:hover {
+            background: rgba(107, 15, 26, .8);
+        }
+
+        .event-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 1.5rem;
+            filter: brightness(.85) saturate(1.1);
+            transition: filter .3s;
+        }
+
+        .event-card:hover .event-img {
+            filter: brightness(.95) saturate(1.2);
+        }
+
+        .event-card-body {
+            padding: 0 2.5rem;
+        }
+
+        .event-label {
+            font-size: .56rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--saffron);
+            margin-bottom: .5rem;
+            font-weight: 500;
+        }
+
+        .event-name {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.5rem;
+            color: var(--gold-ll);
+            margin-bottom: .75rem;
+            line-height: 1.2;
+        }
+
+        .event-desc {
+            font-family: 'Crimson Text', serif;
+            font-size: .96rem;
+            font-style: italic;
+            color: rgba(253, 243, 216, .55);
+            line-height: 1.75;
+            margin-bottom: 1.25rem;
+        }
+
+        .event-time {
+            font-size: .72rem;
+            letter-spacing: .12em;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* ── TIMELINE ── */
+        .timeline-section {
+            background: var(--cream);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 740px;
+            margin: 4rem auto 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--gold) 15%, var(--gold) 85%, transparent);
+            transform: translateX(-50%);
+            opacity: .35;
+        }
+
+        .tl-item {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .tl-item:nth-child(even) .tl-content {
+            order: 3;
+            text-align: left;
+        }
+
+        .tl-item:nth-child(even) .tl-empty {
+            order: 1;
+        }
+
+        .tl-item:nth-child(odd) .tl-content {
+            text-align: right;
+        }
+
+        .tl-dot {
+            width: 48px;
+            height: 48px;
+            background: var(--maroon);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 0 8px rgba(200, 146, 42, .08);
+        }
+
+        .tl-year {
+            font-size: .66rem;
+            letter-spacing: .15em;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: .25rem;
+            text-transform: uppercase;
+        }
+
+        .tl-event {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.1rem;
+            color: var(--maroon);
+            margin-bottom: .35rem;
+        }
+
+        .tl-desc {
+            font-family: 'Crimson Text', serif;
+            font-size: .92rem;
+            font-style: italic;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ── COUNTDOWN ── */
+        .countdown-section {
+            background: var(--maroon);
+            padding: 6rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-section::before {
+            content: 'ॐ';
+            position: absolute;
+            font-size: 30rem;
+            color: rgba(200, 146, 42, .04);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            line-height: 1;
+            font-family: 'Noto Serif Devanagari', serif;
+        }
+
+        .countdown-title {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 1.2rem;
+            color: rgba(253, 243, 216, .55);
+            margin-bottom: 3rem;
+            letter-spacing: .08em;
+        }
+
+        .cd-numbers {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .cd-unit {
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .cd-sep {
+            font-family: 'Yeseva One', serif;
+            font-size: 4rem;
+            color: var(--gold);
+            opacity: .3;
+            padding-top: .5rem;
+            line-height: 1.4;
+        }
+
+        .cd-num {
+            font-family: 'Yeseva One', serif;
+            font-size: clamp(4rem, 9vw, 6.5rem);
+            color: var(--gold-ll);
+            line-height: 1;
+            display: block;
+            text-shadow: 0 4px 30px rgba(200, 146, 42, .3);
+        }
+
+        .cd-label {
+            font-size: .56rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(200, 146, 42, .55);
+            margin-top: .5rem;
+        }
+
+        /* ── SCHEDULE ── */
+        .schedule-section {
+            background: var(--warm);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .sch-day {
+            border-left: 3px solid var(--gold);
+            padding-left: 2rem;
+        }
+
+        .sch-day-title {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.35rem;
+            color: var(--maroon);
+            margin-bottom: .25rem;
+        }
+
+        .sch-day-date {
+            font-family: 'Crimson Text', serif;
+            font-size: .9rem;
+            font-style: italic;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .sch-item {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 1.85rem;
+        }
+
+        .sch-time {
+            font-size: .7rem;
+            color: var(--gold);
+            white-space: nowrap;
+            min-width: 68px;
+            padding-top: .2rem;
+            font-weight: 600;
+        }
+
+        .sch-name {
+            font-family: 'Yeseva One', serif;
+            font-size: .97rem;
+            color: var(--maroon);
+            margin-bottom: .2rem;
+        }
+
+        .sch-desc {
+            font-family: 'Crimson Text', serif;
+            font-size: .9rem;
+            font-style: italic;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        /* ── GALLERY ── */
+        .gallery-section {
+            background: var(--cream);
+            padding: 6.5rem 0;
+        }
+
+        .gallery-header {
+            padding: 0 5rem;
+            margin-bottom: 3.5rem;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: 300px 300px;
+            gap: 3px;
+        }
+
+        .g-item {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .g-item:nth-child(1) {
+            grid-column: 1/6;
+            grid-row: 1/3;
+        }
+
+        .g-item:nth-child(2) {
+            grid-column: 6/9;
+            grid-row: 1/2;
+        }
+
+        .g-item:nth-child(3) {
+            grid-column: 9/13;
+            grid-row: 1/2;
+        }
+
+        .g-item:nth-child(4) {
+            grid-column: 6/9;
+            grid-row: 2/3;
+        }
+
+        .g-item:nth-child(5) {
+            grid-column: 9/13;
+            grid-row: 2/3;
+        }
+
+        .g-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .7s, filter .4s;
+            filter: brightness(.92) saturate(1.05);
+        }
+
+        .g-item:hover .g-img {
+            transform: scale(1.07);
+            filter: brightness(1.02) saturate(1.15);
+        }
+
+        .g-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(107, 15, 26, 0);
+            transition: background .35s;
+            pointer-events: none;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.25rem;
+        }
+
+        .g-item:hover .g-overlay {
+            background: rgba(107, 15, 26, .25);
+        }
+
+        .g-label {
+            color: rgba(253, 243, 216, 0);
+            font-family: 'Yeseva One', serif;
+            font-size: .85rem;
+            transition: color .35s;
+        }
+
+        .g-item:hover .g-label {
+            color: rgba(253, 243, 216, .8);
+        }
+
+        /* ── WEDDING PARTY ── */
+        .party-section {
+            background: var(--warm);
+        }
+
+        .party-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            margin-top: 4rem;
+        }
+
+        .party-side-title {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.3rem;
+            color: var(--maroon);
+            margin-bottom: 1.5rem;
+            padding-bottom: .75rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .party-members {
+            display: flex;
+            flex-direction: column;
+            gap: 1.3rem;
+        }
+
+        .party-member {
+            display: flex;
+            gap: 1.1rem;
+            align-items: center;
+            padding: .75rem;
+            transition: background .2s;
+        }
+
+        .party-member:hover {
+            background: rgba(200, 146, 42, .05);
+        }
+
+        .party-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+            flex-shrink: 0;
+        }
+
+        .party-name {
+            font-family: 'Yeseva One', serif;
+            font-size: 1rem;
+            color: var(--maroon);
+        }
+
+        .party-role {
+            font-size: .66rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: .1rem;
+        }
+
+        /* ── VENUE ── */
+        .venue-section {
+            background: var(--cream);
+        }
+
+        .venue-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .venue-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .venue-img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            display: block;
+            transition: transform .6s;
+        }
+
+        .venue-img-wrap:hover .venue-img {
+            transform: scale(1.03);
+        }
+
+        .venue-img-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(62, 8, 16, .9), transparent);
+            padding: 2.5rem 1.5rem 1.25rem;
+            pointer-events: none;
+        }
+
+        .venue-img-bar-text {
+            color: var(--gold-ll);
+            font-family: 'Yeseva One', serif;
+            font-size: .85rem;
+        }
+
+        .venue-name {
+            font-family: 'Yeseva One', serif;
+            font-size: 2rem;
+            color: var(--maroon);
+            margin-bottom: .75rem;
+            line-height: 1.15;
+        }
+
+        .venue-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.07rem;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .venue-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .venue-detail {
+            display: flex;
+            gap: .9rem;
+        }
+
+        .venue-detail-icon {
+            flex-shrink: 0;
+            margin-top: .1rem;
+        }
+
+        .venue-detail-label {
+            font-size: .56rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .15rem;
+            font-weight: 600;
+        }
+
+        .venue-detail-value {
+            font-size: .85rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ── ACCOMMODATION ── */
+        .accomm-section {
+            background: var(--warm);
+        }
+
+        .accomm-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3.5rem;
+        }
+
+        .accomm-card {
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: box-shadow .35s, border-color .35s;
+        }
+
+        .accomm-card:hover {
+            box-shadow: 0 16px 48px rgba(107, 15, 26, .14);
+            border-color: var(--gold);
+        }
+
+        .accomm-img-wrap {
+            overflow: hidden;
+        }
+
+        .accomm-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            filter: saturate(.9);
+            transition: filter .4s, transform .5s;
+        }
+
+        .accomm-card:hover .accomm-img {
+            filter: saturate(1.1);
+            transform: scale(1.03);
+        }
+
+        .accomm-info {
+            padding: 1.5rem;
+        }
+
+        .accomm-tier {
+            font-size: .56rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: .4rem;
+        }
+
+        .accomm-name {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.07rem;
+            color: var(--maroon);
+            margin-bottom: .35rem;
+        }
+
+        .accomm-dist {
+            font-size: .75rem;
+            color: var(--muted);
+            margin-bottom: .65rem;
+        }
+
+        .accomm-rate {
+            font-family: 'Crimson Text', serif;
+            font-size: .97rem;
+            font-style: italic;
+            color: var(--maroon);
+        }
+
+        /* ── TRAVEL ── */
+        .travel-section {
+            background: var(--cream);
+        }
+
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            margin-top: 3.5rem;
+        }
+
+        .travel-card {
+            padding: 2.5rem 1.75rem;
+            border-right: 1px solid var(--border);
+            text-align: center;
+            transition: background .25s;
+        }
+
+        .travel-card:last-child {
+            border-right: none;
+        }
+
+        .travel-card:hover {
+            background: var(--gold-pale);
+        }
+
+        .travel-icon {
+            font-size: 2.2rem;
+            margin-bottom: .9rem;
+            display: block;
+        }
+
+        .travel-title {
+            font-family: 'Yeseva One', serif;
+            font-size: 1rem;
+            color: var(--maroon);
+            margin-bottom: .5rem;
+        }
+
+        .travel-text {
+            font-family: 'Crimson Text', serif;
+            font-size: .91rem;
+            font-style: italic;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ── REGISTRY ── */
+        .registry-section {
+            background: var(--warm);
+        }
+
+        .registry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3.5rem;
+        }
+
+        .registry-card {
+            background: var(--cream);
+            padding: 2.75rem 2rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all .35s;
+        }
+
+        .registry-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 12px 36px rgba(107, 15, 26, .1);
+            transform: translateY(-5px);
+        }
+
+        .registry-icon {
+            font-size: 2.6rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .registry-store {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.15rem;
+            color: var(--maroon);
+            margin-bottom: .4rem;
+        }
+
+        .registry-desc {
+            font-family: 'Crimson Text', serif;
+            font-size: .97rem;
+            font-style: italic;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 1.75rem;
+        }
+
+        .btn-maroon {
+            display: inline-block;
+            padding: .65rem 1.75rem;
+            background: transparent;
+            border: 1px solid var(--maroon);
+            color: var(--maroon);
+            font-size: .63rem;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .25s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-maroon:hover {
+            background: var(--maroon);
+            color: var(--gold-ll);
+        }
+
+        /* ── FAQ ── */
+        .faq-section {
+            background: var(--cream);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: var(--border);
+            margin-top: 3.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .faq-item {
+            background: var(--cream);
+            padding: 2.25rem 2.5rem;
+            transition: background .25s;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+        }
+
+        .faq-item:hover {
+            background: var(--gold-pale);
+        }
+
+        .faq-q {
+            font-family: 'Yeseva One', serif;
+            font-size: 1rem;
+            color: var(--maroon);
+            margin-bottom: .75rem;
+        }
+
+        .faq-a {
+            font-family: 'Crimson Text', serif;
+            font-size: .97rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        /* ── WISHES ── */
+        .wishes-section {
+            background: var(--warm);
+        }
+
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .wish-card {
+            background: var(--cream);
+            padding: 2.25rem;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all .3s;
+        }
+
+        .wish-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(107, 15, 26, .08);
+        }
+
+        .wish-card::before {
+            content: '❝';
+            position: absolute;
+            top: -.5rem;
+            left: 1.25rem;
+            font-size: 4rem;
+            color: var(--maroon);
+            opacity: .06;
+            font-family: serif;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .wish-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.02rem;
+            font-style: italic;
+            color: var(--muted);
+            line-height: 1.85;
+            margin-bottom: 1.25rem;
+            margin-top: .75rem;
+        }
+
+        .wish-footer {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .wish-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+
+        .wish-name {
+            font-family: 'Yeseva One', serif;
+            font-size: .9rem;
+            color: var(--maroon);
+        }
+
+        .wish-relation {
+            font-size: .6rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ── RSVP ── */
+        .rsvp-section {
+            background: var(--maroon-d);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rsvp-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1592903297149-37fb25202dfa?w=1800&q=80&fit=crop') center/cover;
+            opacity: .06;
+            pointer-events: none;
+        }
+
+        .rsvp-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .rsvp-title {
+            font-family: 'Yeseva One', serif;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            color: var(--gold-ll);
+            margin-bottom: .75rem;
+        }
+
+        .rsvp-sub {
+            font-family: 'Crimson Text', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: rgba(253, 243, 216, .5);
+            margin-bottom: 2.5rem;
+        }
+
+        .rsvp-deadline {
+            font-size: .6rem;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: var(--saffron);
+            margin-bottom: 2.75rem;
+            display: block;
+        }
+
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            text-align: left;
+        }
+
+        .rsvp-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: .45rem;
+        }
+
+        .form-label {
+            font-size: .55rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: rgba(253, 243, 216, .4);
+            font-weight: 400;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(200, 146, 42, .2);
+            color: white;
+            padding: .9rem 1.1rem;
+            font-size: .88rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            outline: none;
+            transition: border-color .25s, background .25s;
+            width: 100%;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, .2);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, .07);
+        }
+
+        .form-select option {
+            background: var(--maroon-d);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .rsvp-choice {
+            display: flex;
+            gap: .85rem;
+            flex-wrap: wrap;
+        }
+
+        .rsvp-option {
+            flex: 1;
+            padding: .9rem;
+            border: 1px solid rgba(200, 146, 42, .22);
+            background: transparent;
+            color: rgba(255, 255, 255, .4);
+            font-family: 'Poppins', sans-serif;
+            font-size: .68rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .25s;
+            text-align: center;
+        }
+
+        .rsvp-option:hover,
+        .rsvp-option.selected {
+            border-color: var(--gold);
+            background: rgba(200, 146, 42, .1);
+            color: var(--gold);
+        }
+
+        .rsvp-submit {
+            background: linear-gradient(135deg, var(--gold), var(--saffron));
+            color: var(--maroon-d);
+            border: none;
+            padding: 1.1rem 3rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .3s;
+            margin-top: .5rem;
+        }
+
+        .rsvp-submit:hover {
+            background: linear-gradient(135deg, var(--gold-l), var(--gold));
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--deep);
+            padding: 4.5rem 5rem 2.5rem;
+            border-top: 3px solid var(--gold);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(200, 146, 42, .12);
+            margin-bottom: 2rem;
+        }
+
+        .footer-monogram {
+            font-family: 'Yeseva One', serif;
+            font-size: 2.8rem;
+            color: var(--gold);
+        }
+
+        .footer-center {
+            text-align: center;
+        }
+
+        .footer-date {
+            font-family: 'Crimson Text', serif;
+            font-size: .97rem;
+            font-style: italic;
+            color: rgba(253, 243, 216, .4);
+            margin-bottom: .25rem;
+        }
+
+        .footer-venue {
+            font-size: .58rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: .65;
+        }
+
+        .footer-devanagari {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 1.5rem;
+            color: rgba(200, 146, 42, .2);
+            text-align: center;
+            margin: 1.25rem 0;
+            letter-spacing: .25em;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: .7rem;
+            justify-content: flex-end;
+        }
+
+        .social-link {
+            width: 38px;
+            height: 38px;
+            border: 1px solid rgba(200, 146, 42, .22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .85rem;
+            color: rgba(200, 146, 42, .4);
+            text-decoration: none;
+            transition: all .25s;
+        }
+
+        .social-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(200, 146, 42, .08);
+        }
+
+        .footer-hashtag {
+            font-family: 'Yeseva One', serif;
+            font-size: 1.15rem;
+            color: rgba(200, 146, 42, .28);
+            text-align: center;
+            margin-bottom: .6rem;
+        }
+
+        .footer-copy {
+            font-size: .63rem;
+            color: rgba(255, 255, 255, .16);
+            text-align: center;
+            letter-spacing: .1em;
+        }
+
+        /* ── REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .85s ease, transform .85s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-delay-1 {
+            transition-delay: .12s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: .24s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: .36s;
+        }
+
+        /* ── COUNTDOWN OVER MESSAGE ── */
+        .cd-over-msg {
+            font-family: 'Yeseva One', serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--gold-ll);
+            letter-spacing: .08em;
+            text-shadow: 0 4px 30px rgba(200,146,42,.4);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+
+            nav,
+            nav.scrolled {
+                padding: 1rem 2rem;
+            }
+
+            .section {
+                padding: 5rem 2.5rem;
+            }
+
+            .story-grid,
+            .venue-grid,
+            .party-grid,
+            .schedule-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .events-grid,
+            .accomm-grid,
+            .registry-grid,
+            .wishes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-card {
+                border-right: none;
+                border-bottom: 1px solid rgba(200, 146, 42, .15);
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .travel-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+
+            .g-item:nth-child(1) {
+                grid-column: span 2;
+                height: 400px;
+            }
+
+            .g-item:nth-child(n) {
+                height: 260px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .footer-monogram,
+            .footer-socials {
+                text-align: center;
+                justify-content: center;
+            }
+
+            .countdown-section {
+                padding: 4rem 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+
+            .rsvp-row {
+                grid-template-columns: 1fr;
+            }
+
+            .info-strip {
+                flex-direction: column;
+            }
+
+            .info-strip-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, .12);
+            }
+
+            .hero-corner {
+                font-size: 1.2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .g-item:nth-child(1) {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <span class="nav-monogram">🪔 P &amp; A</span>
+        <ul class="nav-links">
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#events">Ceremonies</a></li>
+            <li><a href="#venue">Venue</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#registry">Gifts</a></li>
+            <li><a href="#rsvp" class="nav-rsvp">RSVP</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-band top">
+            <div class="hero-band-line"></div>
+            <div class="hero-band-dots"></div>
+        </div>
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1800&q=85&fit=crop"
+                alt="Indian Wedding Palace">
+        </div>
+        <div class="hero-frame"></div>
+        <span class="hero-corner tl">🌸</span>
+        <span class="hero-corner tr">🌸</span>
+        <span class="hero-corner bl">🌸</span>
+        <span class="hero-corner br">🌸</span>
+        <div class="hero-content">
+            <span class="hero-om">ॐ</span>
+            <p class="hero-eyebrow">With the blessings of God &amp; our families</p>
+            <p class="hero-invite">We joyfully invite you to celebrate the sacred union of</p>
+            <h1 class="hero-names">
+                Priya
+                <span class="hero-amp">✦ &amp; ✦</span>
+                Arjun
+            </h1>
+            <div class="divider">🌸 🪔 🌸</div>
+            <p class="hero-tagline">शुभ विवाह · Shubh Vivah</p>
+            <p class="hero-date-line">Friday, the twenty-second of November, two thousand twenty-five</p>
+            <p class="hero-loc">🌹 The Grand Leela Palace · Udaipur, Rajasthan 🌹</p>
+        </div>
+        <div class="hero-scroll">
+            <span class="scroll-text">Scroll</span>
+            <div class="scroll-arrow"></div>
+        </div>
+        <div class="hero-band bottom">
+            <div class="hero-band-dots"></div>
+            <div class="hero-band-line"></div>
+        </div>
+    </section>
+
+    <!-- INFO STRIP -->
+    <div class="info-strip">
+        <div class="info-strip-item">
+            <p class="info-strip-label">Wedding Date</p>
+            <p class="info-strip-value">22 November 2025</p>
+        </div>
+        <div class="info-strip-item">
+            <p class="info-strip-label">Muhurtam</p>
+            <p class="info-strip-value">10:30 AM</p>
+        </div>
+        <div class="info-strip-item">
+            <p class="info-strip-label">Venue</p>
+            <p class="info-strip-value">The Leela Palace</p>
+        </div>
+        <div class="info-strip-item">
+            <p class="info-strip-label">RSVP By</p>
+            <p class="info-strip-value">October 15, 2025</p>
+        </div>
+        <div class="info-strip-item">
+            <p class="info-strip-label">Dress Code</p>
+            <p class="info-strip-value">Indian Traditional</p>
+        </div>
+    </div>
+
+    <!-- STORY -->
+    <section class="section story-section" id="story">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Ek Aur Ek Gyarah 💛</p>
+                <h2 class="section-title">Our Love Story</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="story-grid">
+                <div class="story-img-wrap reveal">
+                    <div class="story-img-border"></div>
+                    <div class="story-img-border-2"></div>
+                    <img class="story-img-main"
+                        src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=700&q=80&fit=crop"
+                        alt="Indian Couple">
+                    <img class="story-img-secondary"
+                        src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80&fit=crop"
+                        alt="Marigold flowers">
+                    <div class="story-badge">
+                        <span class="story-badge-icon">💍</span>
+                        <span class="story-badge-text">2021</span>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <p class="story-left-eyebrow">Hamare Sapno Ki Kahani</p>
+                    <h3 class="story-heading">Four years of chai,<br>laughter &amp; forever</h3>
+                    <p class="story-text">It started at a Diwali party in Mumbai in 2021 — Priya dropped her diya and
+                        Arjun caught it. She says it was fate. He says it was just good reflexes. Either way, neither of
+                        them has let go since.</p>
+                    <p class="story-text">What followed was a beautiful journey of long drives on Marine Drive, family
+                        dinners, temple visits, and the kind of love that feels like coming home. Arjun proposed at
+                        sunrise on the ghats of Varanasi — and Priya said yes before he finished the sentence.</p>
+                    <div class="gold-line" style="margin: 1.5rem 0;"></div>
+                    <p class="story-quote">"तुझसे नाराज़ नहीं ज़िंदगी, हैरान हूँ मैं — कि तुझमें मिले ये तुम।"</p>
+                    <p class="story-sig">Priya &amp; Arjun 🌸</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CEREMONIES -->
+    <section class="section events-section" id="events">
+        <div class="container">
+            <div class="reveal" style="position:relative;z-index:1;">
+                <p class="section-eyebrow">Shaadi ke Rang</p>
+                <h2 class="section-title">Wedding Ceremonies</h2>
+                <div class="gold-line"
+                    style="background:linear-gradient(to right,transparent,var(--gold),transparent);"></div>
+            </div>
+            <div class="events-grid">
+                <div class="event-card reveal">
+                    <img class="event-img"
+                        src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80&fit=crop"
+                        alt="Haldi Mehendi">
+                    <div class="event-card-body">
+                        <p class="event-label">Day 1 · 20 November</p>
+                        <h3 class="event-name">Haldi &amp; Mehendi</h3>
+                        <p class="event-desc">A vibrant celebration of turmeric blessings and intricate henna art,
+                            surrounded by music, flowers, and family.</p>
+                        <p class="event-time">📍 Family Residence · 4:00 PM onwards</p>
+                    </div>
+                </div>
+                <div class="event-card reveal reveal-delay-1">
+                    <img class="event-img"
+                        src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80&fit=crop"
+                        alt="Sangeet Night">
+                    <div class="event-card-body">
+                        <p class="event-label">Day 2 · 21 November</p>
+                        <h3 class="event-name">Sangeet</h3>
+                        <p class="event-desc">An evening of music, dance performances, and joyful chaos as both families
+                            come together. Bollywood guaranteed.</p>
+                        <p class="event-time">📍 The Leela Lawns · 7:00 PM — 1:00 AM</p>
+                    </div>
+                </div>
+                <div class="event-card reveal reveal-delay-2">
+                    <img class="event-img"
+                        src="https://images.unsplash.com/photo-1592903297149-37fb25202dfa?w=600&q=80&fit=crop"
+                        alt="Wedding Ceremony">
+                    <div class="event-card-body">
+                        <p class="event-label">Day 3 · 22 November</p>
+                        <h3 class="event-name">Wedding &amp; Reception</h3>
+                        <p class="event-desc">The sacred Vedic ceremony followed by a grand reception dinner and dancing
+                            under the stars by the lake.</p>
+                        <p class="event-time">📍 The Grand Leela Palace · 10:30 AM &amp; 7:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="section timeline-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Humara Safar</p>
+                <h2 class="section-title">Our Journey Together</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="tl-item reveal">
+                    <div class="tl-content">
+                        <p class="tl-year">Diwali 2021</p>
+                        <p class="tl-event">First Meeting</p>
+                        <p class="tl-desc">A dropped diya at a Mumbai Diwali party. Some call it clumsiness. We call it
+                            destiny.</p>
+                    </div>
+                    <div class="tl-dot">🪔</div>
+                    <div class="tl-empty"></div>
+                </div>
+                <div class="tl-item reveal reveal-delay-1">
+                    <div class="tl-empty"></div>
+                    <div class="tl-dot">☕</div>
+                    <div class="tl-content">
+                        <p class="tl-year">2022</p>
+                        <p class="tl-event">First Date</p>
+                        <p class="tl-desc">Irani chai at a tiny Colaba café. Three hours became six. The waiter asked
+                            them to leave.</p>
+                    </div>
+                </div>
+                <div class="tl-item reveal reveal-delay-2">
+                    <div class="tl-content">
+                        <p class="tl-year">March 2023</p>
+                        <p class="tl-event">Meeting the Families</p>
+                        <p class="tl-desc">Nervous introductions, home-cooked biryani, and cricket. Even the
+                            grandmothers approved.</p>
+                    </div>
+                    <div class="tl-dot">🏡</div>
+                    <div class="tl-empty"></div>
+                </div>
+                <div class="tl-item reveal reveal-delay-1">
+                    <div class="tl-empty"></div>
+                    <div class="tl-dot">💍</div>
+                    <div class="tl-content">
+                        <p class="tl-year">January 2025</p>
+                        <p class="tl-event">The Proposal</p>
+                        <p class="tl-desc">Sunrise on the ghats of Varanasi. Marigolds. A ring. Happy tears. She said
+                            yes.</p>
+                    </div>
+                </div>
+                <div class="tl-item reveal reveal-delay-2">
+                    <div class="tl-content">
+                        <p class="tl-year">November 2025</p>
+                        <p class="tl-event">Shaadi!</p>
+                        <p class="tl-desc">Udaipur. Lake Pichola. The Leela Palace. 300 loved ones. Forever begins.</p>
+                    </div>
+                    <div class="tl-dot">💒</div>
+                    <div class="tl-empty"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-section">
+        <p class="countdown-title">शुभ विवाह की उलटी गिनती शुरू</p>
+        <div class="cd-numbers">
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-days" contenteditable="true" spellcheck="false">120</span>
+                <p class="cd-label">Days</p>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-hours" contenteditable="true" spellcheck="false">08</span>
+                <p class="cd-label">Hours</p>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-mins" contenteditable="true" spellcheck="false">30</span>
+                <p class="cd-label">Minutes</p>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit">
+                <span class="cd-num" id="cd-secs" contenteditable="true" spellcheck="false">00</span>
+                <p class="cd-label">Seconds</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <section class="section schedule-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Shaadi ka Program</p>
+                <h2 class="section-title">Order of Celebrations</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="schedule-grid">
+                <div class="sch-day reveal">
+                    <h3 class="sch-day-title">🌿 Haldi &amp; Mehendi</h3>
+                    <p class="sch-day-date">Thursday, 20 November 2025</p>
+                    <div class="sch-item">
+                        <p class="sch-time">3:00 PM</p>
+                        <div>
+                            <p class="sch-name">Haldi Ceremony</p>
+                            <p class="sch-desc">Sacred turmeric ceremony at the family home. Wear clothes you don't mind
+                                staining yellow!</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">4:30 PM</p>
+                        <div>
+                            <p class="sch-name">Mehendi</p>
+                            <p class="sch-desc">Mehendi artists, dhol, giddha, and refreshments. All ladies warmly
+                                welcome.</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">7:00 PM</p>
+                        <div>
+                            <p class="sch-name">Family Dinner</p>
+                            <p class="sch-desc">Intimate family dinner with home-cooked food and blessings from the
+                                elders.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sch-day reveal reveal-delay-1">
+                    <h3 class="sch-day-title">💃 Sangeet Night</h3>
+                    <p class="sch-day-date">Friday, 21 November 2025</p>
+                    <div class="sch-item">
+                        <p class="sch-time">5:00 PM</p>
+                        <div>
+                            <p class="sch-name">Cocktail &amp; Starters</p>
+                            <p class="sch-desc">Mocktails, starters and a chance to mingle before the performances
+                                begin.</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">7:00 PM</p>
+                        <div>
+                            <p class="sch-name">Dance Performances</p>
+                            <p class="sch-desc">Choreographed performances by both families. May the best team win!</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">9:00 PM</p>
+                        <div>
+                            <p class="sch-name">Dinner &amp; Open Dance</p>
+                            <p class="sch-desc">Grand Rajasthani dinner. DJ until 1 AM. Baaraatis especially encouraged
+                                to dance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sch-day reveal">
+                    <h3 class="sch-day-title">🪔 Wedding Day</h3>
+                    <p class="sch-day-date">Saturday, 22 November 2025</p>
+                    <div class="sch-item">
+                        <p class="sch-time">9:00 AM</p>
+                        <div>
+                            <p class="sch-name">Baraat</p>
+                            <p class="sch-desc">Groom's procession with dhol, horses, and much dancing from The Leela
+                                lobby.</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">10:30 AM</p>
+                        <div>
+                            <p class="sch-name">Muhurtam — Ceremony</p>
+                            <p class="sch-desc">Sacred Vedic ceremony by the lake. Please be seated by 10:00 AM.</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">1:30 PM</p>
+                        <div>
+                            <p class="sch-name">Vidaai &amp; Lunch</p>
+                            <p class="sch-desc">Emotional farewell followed by a lavish Rajasthani thali lunch for all
+                                guests.</p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">7:00 PM</p>
+                        <div>
+                            <p class="sch-name">Grand Reception</p>
+                            <p class="sch-desc">Bollywood reception under the stars by Lake Pichola. Dancing until
+                                midnight.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sch-day reveal reveal-delay-1">
+                    <h3 class="sch-day-title">🌅 Day After</h3>
+                    <p class="sch-day-date">Sunday, 23 November 2025</p>
+                    <div class="sch-item">
+                        <p class="sch-time">9:00 AM</p>
+                        <div>
+                            <p class="sch-name">Farewell Breakfast</p>
+                            <p class="sch-desc">Leisurely farewell breakfast at The Leela for all out-of-town guests.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="sch-item">
+                        <p class="sch-time">11:00 AM</p>
+                        <div>
+                            <p class="sch-name">Hotel Check-Out</p>
+                            <p class="sch-desc">Shuttles to Udaipur Airport and Railway Station arranged for all guests.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-header reveal">
+            <p class="section-eyebrow">Hamare Pal</p>
+            <h2 class="section-title">A Glimpse of Us</h2>
+            <div class="gold-line"></div>
+        </div>
+        <div class="gallery-grid">
+            <div class="g-item"><img class="g-img"
+                    src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&q=80&fit=crop" alt="Couple">
+                <div class="g-overlay"><span class="g-label">The Beginning</span></div>
+            </div>
+            <div class="g-item"><img class="g-img"
+                    src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80&fit=crop" alt="Flowers">
+                <div class="g-overlay"><span class="g-label">Marigold Mornings</span></div>
+            </div>
+            <div class="g-item"><img class="g-img"
+                    src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80&fit=crop" alt="Palace">
+                <div class="g-overlay"><span class="g-label">Royal Udaipur</span></div>
+            </div>
+            <div class="g-item"><img class="g-img"
+                    src="https://images.unsplash.com/photo-1592903297149-37fb25202dfa?w=600&q=80&fit=crop"
+                    alt="Ceremony">
+                <div class="g-overlay"><span class="g-label">Sacred Vows</span></div>
+            </div>
+            <div class="g-item"><img class="g-img"
+                    src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80&fit=crop"
+                    alt="Celebrations">
+                <div class="g-overlay"><span class="g-label">Celebrations</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WEDDING PARTY -->
+    <section class="section party-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Apne Log</p>
+                <h2 class="section-title">The Wedding Party</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="party-grid">
+                <div class="reveal">
+                    <h3 class="party-side-title">🌸 Bride's Side</h3>
+                    <div class="party-members">
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face"
+                                alt="Ananya Mehta">
+                            <div>
+                                <p class="party-name">Ananya Mehta</p>
+                                <p class="party-role">Maid of Honour · Best Friend</p>
+                            </div>
+                        </div>
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&fit=crop&crop=face"
+                                alt="Kavya Sharma">
+                            <div>
+                                <p class="party-name">Kavya Sharma</p>
+                                <p class="party-role">Bridesmaid · Cousin</p>
+                            </div>
+                        </div>
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100&h=100&fit=crop&crop=face"
+                                alt="Nisha Patel">
+                            <div>
+                                <p class="party-name">Nisha Patel</p>
+                                <p class="party-role">Bridesmaid · College Friend</p>
+                            </div>
+                        </div>
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=100&h=100&fit=crop&crop=face"
+                                alt="Ritu Agarwal">
+                            <div>
+                                <p class="party-name">Ritu Agarwal</p>
+                                <p class="party-role">Bridesmaid · Didi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <h3 class="party-side-title" style="color:var(--teal);">🪔 Groom's Side</h3>
+                    <div class="party-members">
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
+                                alt="Rohan Singh">
+                            <div>
+                                <p class="party-name">Rohan Singh</p>
+                                <p class="party-role">Best Man · Bhai</p>
+                            </div>
+                        </div>
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+                                alt="Vikram Joshi">
+                            <div>
+                                <p class="party-name">Vikram Joshi</p>
+                                <p class="party-role">Groomsman · College Yaar</p>
+                            </div>
+                        </div>
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face"
+                                alt="Dev Kapoor">
+                            <div>
+                                <p class="party-name">Dev Kapoor</p>
+                                <p class="party-role">Groomsman · Childhood Friend</p>
+                            </div>
+                        </div>
+                        <div class="party-member">
+                            <img class="party-avatar"
+                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+                                alt="Aditya Rao">
+                            <div>
+                                <p class="party-name">Aditya Rao</p>
+                                <p class="party-role">Groomsman · Cousin</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENUE -->
+    <section class="section venue-section" id="venue">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Shaadi ka Sthan</p>
+                <h2 class="section-title">The Venue</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="venue-grid">
+                <div class="venue-img-wrap reveal">
+                    <img class="venue-img"
+                        src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&q=80&fit=crop"
+                        alt="Udaipur Palace Venue">
+                    <div class="venue-img-bar">
+                        <p class="venue-img-bar-text">The Grand Leela Palace, Udaipur</p>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <h3 class="venue-name">The Grand Leela Palace,<br>Udaipur</h3>
+                    <p class="venue-text">Nestled on the banks of Lake Pichola with the Aravalli hills as its backdrop,
+                        The Leela Palace Udaipur is one of India's most iconic wedding destinations — a fairy-tale
+                        fortress of white marble and marigold light.</p>
+                    <p class="venue-text">Floating against Rajasthan's most romantic skyline, it offers the grandeur of
+                        a royal palace, world-class hospitality, and a setting made for celebration.</p>
+                    <div class="venue-details">
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">📍</span>
+                            <div>
+                                <p class="venue-detail-label">Address</p>
+                                <p class="venue-detail-value">Lake Pichola, Udaipur, Rajasthan 313001</p>
+                            </div>
+                        </div>
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">✈️</span>
+                            <div>
+                                <p class="venue-detail-label">Getting Here</p>
+                                <p class="venue-detail-value">Maharana Pratap Airport (UDR) — 25 min · Shuttle from
+                                    airport included</p>
+                            </div>
+                        </div>
+                        <div class="venue-detail">
+                            <span class="venue-detail-icon">📞</span>
+                            <div>
+                                <p class="venue-detail-label">Hotel</p>
+                                <p class="venue-detail-value">+91 294 670 1234 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cfee9ffe9fefaedf8e5e3e2ffccf8e4e9e0e9e9e0eda2efe3e1">[email&#160;protected]</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCOMMODATION -->
+    <section class="section accomm-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Kahan Rukein</p>
+                <h2 class="section-title">Accommodation</h2>
+                <div class="gold-line"></div>
+                <p class="section-sub">Special rates for our guests. Mention "Priya &amp; Arjun Wedding" when booking.
+                </p>
+            </div>
+            <div class="accomm-grid">
+                <div class="accomm-card reveal">
+                    <div class="accomm-img-wrap">
+                        <img class="accomm-img"
+                            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80&fit=crop"
+                            alt="Leela Palace">
+                    </div>
+                    <div class="accomm-info">
+                        <p class="accomm-tier">👑 Venue Hotel</p>
+                        <p class="accomm-name">The Leela Palace Udaipur</p>
+                        <p class="accomm-dist">On-site · Limited rooms</p>
+                        <p class="accomm-rate">From ₹18,000/night · Block booked</p>
+                    </div>
+                </div>
+                <div class="accomm-card reveal reveal-delay-1">
+                    <div class="accomm-img-wrap">
+                        <img class="accomm-img"
+                            src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80&fit=crop"
+                            alt="Taj Lake Palace">
+                    </div>
+                    <div class="accomm-info">
+                        <p class="accomm-tier">⭐ Recommended</p>
+                        <p class="accomm-name">Taj Lake Palace</p>
+                        <p class="accomm-dist">10 min by boat · On the lake</p>
+                        <p class="accomm-rate">From ₹12,000/night · Wedding rate</p>
+                    </div>
+                </div>
+                <div class="accomm-card reveal reveal-delay-2">
+                    <div class="accomm-img-wrap">
+                        <img class="accomm-img"
+                            src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80&fit=crop"
+                            alt="Budget Stay">
+                    </div>
+                    <div class="accomm-info">
+                        <p class="accomm-tier">🏡 Budget Stay</p>
+                        <p class="accomm-name">Zostel Udaipur</p>
+                        <p class="accomm-dist">3 km from venue · Shuttle provided</p>
+                        <p class="accomm-rate">From ₹1,200/night · Young &amp; vibrant</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRAVEL -->
+    <section class="section travel-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Kaise Aaein</p>
+                <h2 class="section-title">Getting to Udaipur</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="travel-grid">
+                <div class="travel-card reveal">
+                    <span class="travel-icon">✈️</span>
+                    <p class="travel-title">By Air</p>
+                    <p class="travel-text">Flights from Mumbai, Delhi, Bangalore &amp; Hyderabad to Maharana Pratap
+                        Airport (UDR). Airport shuttle provided.</p>
+                </div>
+                <div class="travel-card reveal reveal-delay-1">
+                    <span class="travel-icon">🚂</span>
+                    <p class="travel-title">By Train</p>
+                    <p class="travel-text">Udaipur City station connected from Jaipur, Ahmedabad, and Mumbai. Cab
+                        pickups arranged on request.</p>
+                </div>
+                <div class="travel-card reveal reveal-delay-2">
+                    <span class="travel-icon">🚌</span>
+                    <p class="travel-title">Shuttle Service</p>
+                    <p class="travel-text">Complimentary shuttle from airport, railway station, and partner hotels
+                        throughout the wedding days.</p>
+                </div>
+                <div class="travel-card reveal reveal-delay-3">
+                    <span class="travel-icon">🚗</span>
+                    <p class="travel-title">By Road</p>
+                    <p class="travel-text">Jaipur 4.5 hrs · Ahmedabad 3.5 hrs · Jodhpur 3 hrs. Free parking at The Leela
+                        Palace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTRY -->
+    <section class="section registry-section" id="registry">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Ashirvaad &amp; Gifts</p>
+                <h2 class="section-title">With Grateful Hearts</h2>
+                <div class="gold-line"></div>
+                <p class="section-sub" style="max-width:540px;margin:.5rem auto 0;">Your blessings and presence mean the
+                    world to us. For those who wish to gift, we are grateful for anything that helps us begin our new
+                    chapter.</p>
+            </div>
+            <div class="registry-grid">
+                <div class="registry-card reveal">
+                    <span class="registry-icon">🏠</span>
+                    <p class="registry-store">HomeStop Registry</p>
+                    <p class="registry-desc">Beautiful home furnishings, kitchenware, and décor to make our first home
+                        together everything we've dreamed of.</p>
+                    <a href="#" class="btn-maroon">View Registry</a>
+                </div>
+                <div class="registry-card reveal reveal-delay-1">
+                    <span class="registry-icon">🌏</span>
+                    <p class="registry-store">Honeymoon Fund</p>
+                    <p class="registry-desc">Help us start married life with a dream honeymoon through Bali, Japan, and
+                        New Zealand. Any amount welcome.</p>
+                    <a href="#" class="btn-maroon">Contribute via UPI</a>
+                </div>
+                <div class="registry-card reveal reveal-delay-2">
+                    <span class="registry-icon">💛</span>
+                    <p class="registry-store">Your Blessings</p>
+                    <p class="registry-desc">Truly, your presence is the greatest gift. A heartfelt card with your
+                        wishes will be our most prized possession.</p>
+                    <a href="#rsvp" class="btn-maroon">Leave a Message</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Kuch Sawaal</p>
+                <h2 class="section-title">Frequently Asked</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item reveal">
+                    <p class="faq-q">What is the dress code?</p>
+                    <p class="faq-a">Indian traditional attire is warmly encouraged. Sarees, lehengas, sherwanis,
+                        kurta-pyjamas are all perfect. Day 3 family colour is deep red — please avoid wearing bridal red
+                        and white.</p>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <p class="faq-q">Are children welcome?</p>
+                    <p class="faq-a">Of course! It wouldn't be an Indian wedding without the little ones. Children are
+                        welcome at all events. The hotel has babysitting services available on request for the
+                        reception.</p>
+                </div>
+                <div class="faq-item reveal reveal-delay-2">
+                    <p class="faq-q">Is the food vegetarian?</p>
+                    <p class="faq-a">The wedding ceremony menu is fully vegetarian. The sangeet dinner will have both
+                        vegetarian and non-vegetarian options. Please note dietary requirements in your RSVP.</p>
+                </div>
+                <div class="faq-item reveal reveal-delay-3">
+                    <p class="faq-q">Can I take photos during the ceremony?</p>
+                    <p class="faq-a">We have a professional team capturing everything. During the muhurtam, we kindly
+                        request phones away so you can be fully present. Post-ceremony, photograph everything and tag
+                        #PriyaAndArjun2025!</p>
+                </div>
+                <div class="faq-item reveal">
+                    <p class="faq-q">Is alcohol served?</p>
+                    <p class="faq-a">The wedding ceremony and lunch are alcohol-free as per tradition. The sangeet and
+                        reception will have a full open bar with premium spirits, wine, and mocktails.</p>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <p class="faq-q">What if I can't make all events?</p>
+                    <p class="faq-a">We understand! Indicate which events you'll attend in your RSVP. The wedding
+                        ceremony on the 22nd is most important — if you can only come to one, let it be that! 🙏</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WISHES -->
+    <section class="section wishes-section">
+        <div class="container">
+            <div class="reveal">
+                <p class="section-eyebrow">Pyaar Bhari Baatein</p>
+                <h2 class="section-title">Words from Our Loved Ones</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="wishes-grid">
+                <div class="wish-card reveal">
+                    <p class="wish-text">Priya has always been our sunshine. Watching her find someone who loves her the
+                        way Arjun does fills our hearts with more joy than we can express. May God bless you both with a
+                        life full of love and laughter.</p>
+                    <div class="wish-footer">
+                        <img class="wish-avatar"
+                            src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&h=80&fit=crop&crop=face"
+                            alt="Sunita Mehta">
+                        <div>
+                            <p class="wish-name">Sunita Mehta</p>
+                            <p class="wish-relation">Mother of the Bride</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="wish-card reveal reveal-delay-1">
+                    <p class="wish-text">Arjun bhai, tu toh set ho gaya yaar! Priya is amazing — she is way too good for
+                        you and we all know it. Jokes apart, I couldn't be happier for you both. Best decision of your
+                        life. 🎉</p>
+                    <div class="wish-footer">
+                        <img class="wish-avatar"
+                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face"
+                            alt="Rohan Singh">
+                        <div>
+                            <p class="wish-name">Rohan Singh</p>
+                            <p class="wish-relation">Best Man &amp; Best Friend</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="wish-card reveal reveal-delay-2">
+                    <p class="wish-text">From that Diwali party to this — what a journey watching you two fall in love.
+                        Priya, you deserve all the happiness. Arjun, don't mess it up! Love you both so much. ❤️</p>
+                    <div class="wish-footer">
+                        <img class="wish-avatar"
+                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
+                            alt="Ananya Mehta">
+                        <div>
+                            <p class="wish-name">Ananya Mehta</p>
+                            <p class="wish-relation">Maid of Honour</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section rsvp-section" id="rsvp">
+        <div class="rsvp-inner">
+            <div class="reveal">
+                <p class="section-eyebrow" style="color:var(--saffron);">Aapka Intezaar Hai</p>
+                <h2 class="rsvp-title">Will You Join Us?</h2>
+                <p class="rsvp-sub">We would be honoured to have you share in our celebration.</p>
+                <span class="rsvp-deadline">🌸 Please respond by October 15, 2025 🌸</span>
+            </div>
+            <div class="rsvp-form reveal">
+                <div class="rsvp-row">
+                    <div class="form-group"><label class="form-label">First Name</label><input type="text"
+                            class="form-input" placeholder="Aapka naam"></div>
+                    <div class="form-group"><label class="form-label">Last Name</label><input type="text"
+                            class="form-input" placeholder="Surname"></div>
+                </div>
+                <div class="form-group"><label class="form-label">Email / Phone</label><input type="text"
+                        class="form-input" placeholder="Email ya phone number"></div>
+                <div class="form-group">
+                    <label class="form-label">Will you be attending?</label>
+                    <div class="rsvp-choice">
+                        <button type="button" class="rsvp-option" onclick="selectOpt(this)">Zaroor Aaunga/Aaungi
+                            🙏</button>
+                        <button type="button" class="rsvp-option" onclick="selectOpt(this)">Maafi Chahta/Chahti Hoon
+                            🙏</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Which events will you attend?</label>
+                    <div class="rsvp-choice">
+                        <button type="button" class="rsvp-option" onclick="this.classList.toggle('selected')"
+                            style="flex:none;padding:.6rem 1rem;font-size:.62rem;">🌿 Haldi/Mehendi</button>
+                        <button type="button" class="rsvp-option" onclick="this.classList.toggle('selected')"
+                            style="flex:none;padding:.6rem 1rem;font-size:.62rem;">💃 Sangeet</button>
+                        <button type="button" class="rsvp-option" onclick="this.classList.toggle('selected')"
+                            style="flex:none;padding:.6rem 1rem;font-size:.62rem;">🪔 Wedding</button>
+                        <button type="button" class="rsvp-option" onclick="this.classList.toggle('selected')"
+                            style="flex:none;padding:.6rem 1rem;font-size:.62rem;">🎊 Reception</button>
+                    </div>
+                </div>
+                <div class="form-group"><label class="form-label">Number of Guests</label><select
+                        class="form-select form-input">
+                        <option>1 Guest</option>
+                        <option>2 Guests</option>
+                        <option>3 Guests</option>
+                        <option>4+ Guests</option>
+                    </select></div>
+                <div class="form-group"><label class="form-label">Meal Preference</label><select
+                        class="form-select form-input">
+                        <option>Pure Vegetarian</option>
+                        <option>Vegetarian + Jain</option>
+                        <option>Non-Vegetarian (Sangeet only)</option>
+                    </select></div>
+                <div class="form-group"><label class="form-label">Dietary Requirements / Allergies</label><textarea
+                        class="form-textarea" placeholder="Kuch khaas zaroorat ho toh batayein..."></textarea></div>
+                <div class="form-group"><label class="form-label">Song Request for Sangeet 🎵</label><input type="text"
+                        class="form-input" placeholder="Konsa gaana zaroor bajana chahiye?"></div>
+                <div class="form-group"><label class="form-label">A Message for the Couple 💛</label><textarea
+                        class="form-textarea" placeholder="Priya aur Arjun ke liye kuch kehna chahte hain?"></textarea>
+                </div>
+                <button type="button" class="rsvp-submit" onclick="handleRSVP(this)">🙏 RSVP Bhejein</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <p class="footer-monogram">🌸 P &amp; A</p>
+            <div class="footer-center">
+                <p class="footer-date">22 November 2025 · Muhurtam 10:30 AM</p>
+                <p class="footer-venue">The Grand Leela Palace · Udaipur, Rajasthan</p>
+                <p style="color:rgba(200,146,42,.3);margin-top:.75rem;font-size:1.4rem;letter-spacing:.6em;">✦ ॐ ✦</p>
+            </div>
+            <div class="footer-socials">
+                <a href="#" class="social-link">📸</a>
+                <a href="#" class="social-link">💌</a>
+                <a href="#" class="social-link">🎵</a>
+            </div>
+        </div>
+        <p class="footer-devanagari">शुभ विवाह</p>
+        <p class="footer-hashtag">#PriyaAndArjun2025</p>
+        <p class="footer-copy">Priya &amp; Arjun · November 2025 · Made with ❤️ in India</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        /* ── Nav scroll ── */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        /* ── Reveal on scroll ── */
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.07 });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        
+
+        /* ── Countdown ── */
+        (function() {
+            var daysEl  = document.getElementById('cd-days');
+            var hoursEl = document.getElementById('cd-hours');
+            var minsEl  = document.getElementById('cd-mins');
+            var secsEl  = document.getElementById('cd-secs');
+
+            function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
+
+            // Convert current DOM values into a single totalSeconds bucket
+            function readTotal() {
+                return (
+                    (parseInt(daysEl.textContent)  || 0) * 86400 +
+                    (parseInt(hoursEl.textContent) || 0) * 3600  +
+                    (parseInt(minsEl.textContent)  || 0) * 60    +
+                    (parseInt(secsEl.textContent)  || 0)
+                );
+            }
+
+            function writeDisplay(total) {
+                var d = Math.floor(total / 86400);
+                var h = Math.floor((total % 86400) / 3600);
+                var m = Math.floor((total % 3600) / 60);
+                var s = total % 60;
+                daysEl.textContent  = pad(d);
+                hoursEl.textContent = pad(h);
+                minsEl.textContent  = pad(m);
+                secsEl.textContent  = pad(s);
+            }
+
+            var totalSeconds = readTotal();
+            var timer = null;
+
+            function startTimer() {
+                if (timer) clearInterval(timer);
+                if (totalSeconds <= 0) return;
+                timer = setInterval(function() {
+                    totalSeconds--;
+                    if (totalSeconds <= 0) {
+                        totalSeconds = 0;
+                        clearInterval(timer);
+                        timer = null;
+                    }
+                    writeDisplay(totalSeconds);
+                }, 1000);
+            }
+
+            // Pause on focus, restart with new value on blur
+            [daysEl, hoursEl, minsEl, secsEl].forEach(function(el) {
+                el.addEventListener('focus', function() {
+                    if (timer) { clearInterval(timer); timer = null; }
+                });
+                el.addEventListener('blur', function() {
+                    totalSeconds = readTotal();
+                    writeDisplay(totalSeconds);
+                    startTimer();
+                });
+                el.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+                });
+            });
+
+            startTimer();
+        })();
+
+        /* ── RSVP attendance toggle ── */
+        function selectOpt(btn) {
+            btn.closest('.rsvp-choice').querySelectorAll('.rsvp-option').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        /* ── RSVP submit feedback ── */
+        function handleRSVP(btn) {
+            const original = btn.textContent;
+            btn.textContent = '🙏 RSVP Prapt Hua — Dhanyavaad!';
+            btn.style.background = 'linear-gradient(135deg,#8a9e84,#6b8a65)';
+            setTimeout(() => {
+                btn.textContent = original;
+                btn.style.background = '';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

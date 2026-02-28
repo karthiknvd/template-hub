@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ember & Rye — Modern American Kitchen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream: #f5f0e8;
+            --warm-white: #faf8f4;
+            --charcoal: #1a1714;
+            --brown: #2e1f0f;
+            --ember: #c4501a;
+            --gold: #b8892a;
+            --muted: #7a6f63;
+            --card-bg: rgba(255,255,255,0.6);
+            --border: rgba(180,160,130,0.25);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--warm-white);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 4rem;
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(250,248,244,0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.85rem 4rem;
+        }
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--warm-white);
+            transition: color 0.4s;
+        }
+        nav.scrolled .nav-logo { color: var(--charcoal); }
+        .nav-logo span { color: var(--ember); }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: rgba(255,255,255,0.8);
+            transition: color 0.3s;
+        }
+        nav.scrolled .nav-links a { color: var(--muted); }
+        .nav-links a:hover { color: var(--ember) !important; }
+        .nav-reserve {
+            background: var(--ember);
+            color: white !important;
+            padding: 0.6rem 1.4rem;
+            letter-spacing: 0.1em;
+            transition: background 0.3s !important;
+        }
+        .nav-reserve:hover { background: #a03d12 !important; color: white !important; }
+        nav.scrolled .nav-reserve { color: white !important; }
+
+        /* ─── HERO ─── */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                rgba(15,10,5,0.55) 0%,
+                rgba(15,10,5,0.45) 50%,
+                rgba(15,10,5,0.75) 100%
+            );
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 780px;
+            padding: 0 2rem;
+            animation: fadeUp 1.2s ease both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            animation: fadeUp 1s 0.2s ease both;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4rem, 9vw, 8rem);
+            font-weight: 300;
+            color: white;
+            line-height: 0.92;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 1s 0.35s ease both;
+        }
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+        .hero-sub {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.05em;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 1s 0.5s ease both;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeUp 1s 0.65s ease both;
+        }
+        .btn-primary {
+            background: var(--ember);
+            color: white;
+            padding: 0.9rem 2.2rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { background: #a03d12; transform: translateY(-2px); }
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 0.9rem 2.2rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.45);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            animation: fadeUp 1s 1s ease both;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            animation: scrollPulse 2s infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+
+        /* ─── STORY STRIP ─── */
+        .story-strip {
+            background: var(--charcoal);
+            color: white;
+            padding: 1.25rem 4rem;
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            align-items: center;
+        }
+        .strip-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+        }
+        .strip-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--ember);
+            flex-shrink: 0;
+        }
+
+        /* ─── SECTION COMMON ─── */
+        .section { padding: 7rem 4rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--ember);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .eyebrow::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--ember);
+        }
+
+        /* ─── ABOUT ─── */
+        .about-section { background: var(--cream); }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+        .about-img-wrap {
+            position: relative;
+        }
+        .about-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            display: block;
+        }
+        .about-img-accent {
+            position: absolute;
+            bottom: -1.5rem;
+            right: -1.5rem;
+            width: 55%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border: 6px solid var(--cream);
+        }
+        .about-badge {
+            position: absolute;
+            top: 2rem;
+            left: -2rem;
+            background: var(--ember);
+            color: white;
+            padding: 1.2rem;
+            text-align: center;
+            width: 90px;
+        }
+        .about-badge-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            line-height: 1;
+            display: block;
+        }
+        .about-badge-label {
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+        .about-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 4vw, 3.8rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--brown);
+        }
+        .about-title em { font-style: italic; color: var(--ember); }
+        .about-text {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+        }
+        .about-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+        .about-detail-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ember);
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        .about-detail-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--brown);
+        }
+
+        /* ─── FEATURED DISHES ─── */
+        .menu-section { background: var(--warm-white); }
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3.5rem;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            color: var(--brown);
+            line-height: 1.1;
+        }
+        .section-title em { font-style: italic; color: var(--ember); }
+        .menu-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .tab-btn {
+            padding: 0.5rem 1.2rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--ember);
+            border-color: var(--ember);
+            color: white;
+        }
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .dish-card {
+            background: white;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .dish-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(30,15,5,0.12);
+        }
+        .dish-img-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+        .dish-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .dish-card:hover .dish-img { transform: scale(1.06); }
+        .dish-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--ember);
+            color: white;
+            font-size: 0.58rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 0.3rem 0.7rem;
+        }
+        .dish-info { padding: 1.5rem; }
+        .dish-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--brown);
+            margin-bottom: 0.4rem;
+        }
+        .dish-desc {
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .dish-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .dish-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--ember);
+        }
+        .dish-allergens {
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.08em;
+        }
+
+        /* ─── FULL MENU CTA ─── */
+        .menu-cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* ─── EXPERIENCE / AMBIENCE ─── */
+        .ambience-section {
+            background: var(--charcoal);
+            color: white;
+            padding: 0;
+            overflow: hidden;
+        }
+        .ambience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+        .ambience-img-side {
+            position: relative;
+            overflow: hidden;
+        }
+        .ambience-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.85);
+            transition: transform 8s ease;
+        }
+        .ambience-img-side:hover .ambience-img { transform: scale(1.04); }
+        .ambience-content {
+            padding: 6rem 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .ambience-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 3.5vw, 3rem);
+            font-weight: 300;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        .ambience-title em { font-style: italic; color: var(--gold); }
+        .ambience-text {
+            font-size: 0.92rem;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 2.5rem;
+        }
+        .ambience-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .ambience-feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.05em;
+        }
+        .ambience-feature-icon {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(196,80,26,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            color: var(--ember);
+        }
+
+        /* ─── CHEF'S SECTION ─── */
+        .chef-section { background: var(--cream); }
+        .chef-grid {
+            display: grid;
+            grid-template-columns: 5fr 4fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .chef-content { order: 1; }
+        .chef-img-wrap { order: 2; position: relative; }
+        .chef-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+        .chef-quote-card {
+            position: absolute;
+            bottom: 2rem;
+            left: -3rem;
+            background: var(--ember);
+            color: white;
+            padding: 1.5rem 2rem;
+            max-width: 280px;
+        }
+        .chef-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+        .chef-quote-attr {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        .chef-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 3.5vw, 3rem);
+            font-weight: 400;
+            color: var(--brown);
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+        }
+        .chef-title em { font-style: italic; color: var(--ember); }
+        .chef-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--brown);
+            margin-bottom: 0.25rem;
+        }
+        .chef-role {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ember);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .chef-bio {
+            font-size: 0.92rem;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+        .chef-awards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.75rem;
+        }
+        .chef-award {
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.9rem;
+            color: var(--muted);
+        }
+
+        /* ─── RESERVATIONS ─── */
+        .reservations-section {
+            background: var(--brown);
+            color: white;
+        }
+        .reservations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .reservations-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .reservations-title em { font-style: italic; color: var(--gold); }
+        .reservations-text {
+            font-size: 0.9rem;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 2rem;
+        }
+        .hours-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.6);
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .hours-day { font-weight: 500; color: rgba(255,255,255,0.85); }
+        .reservation-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            font-weight: 500;
+        }
+        .form-input, .form-select {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            padding: 0.85rem 1rem;
+            font-size: 0.88rem;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            transition: border-color 0.25s;
+            width: 100%;
+        }
+        .form-input::placeholder { color: rgba(255,255,255,0.3); }
+        .form-input:focus, .form-select:focus { border-color: var(--ember); }
+        .form-select option { background: var(--brown); }
+        .form-submit {
+            background: var(--ember);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.3s;
+            margin-top: 0.5rem;
+        }
+        .form-submit:hover { background: #a03d12; }
+
+        /* ─── GALLERY ─── */
+        .gallery-section { background: var(--warm-white); padding: 7rem 0; }
+        .gallery-header {
+            padding: 0 4rem;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto;
+            gap: 4px;
+        }
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease, filter 0.4s;
+            filter: brightness(0.95);
+        }
+        .gallery-item:nth-child(1) .gallery-img { min-height: 444px; }
+        .gallery-item:hover .gallery-img { transform: scale(1.05); filter: brightness(1); }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15,10,5,0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .gallery-item:hover .gallery-overlay { background: rgba(15,10,5,0.3); }
+        .gallery-plus {
+            color: white;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+        }
+        .gallery-item:hover .gallery-plus { opacity: 1; }
+
+        /* ─── TESTIMONIALS ─── */
+        .testimonials-section { background: var(--cream); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3.5rem;
+        }
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .testimonial-quote-mark {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            line-height: 0.8;
+            color: var(--ember);
+            opacity: 0.2;
+            margin-bottom: 0.5rem;
+        }
+        .testimonial-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--brown);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .testimonial-footer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+        .testimonial-avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--cream);
+        }
+        .testimonial-name {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--brown);
+        }
+        .testimonial-source {
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .stars {
+            color: var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ─── PRIVATE DINING ─── */
+        .private-section {
+            background: var(--charcoal);
+            position: relative;
+            overflow: hidden;
+        }
+        .private-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1519690891169-634d3c5c4c04?w=1600&q=80&fit=crop') center/cover;
+            opacity: 0.15;
+        }
+        .private-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .private-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+        }
+        .private-title em { font-style: italic; color: var(--gold); }
+        .private-text {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.9;
+            margin-bottom: 2.5rem;
+        }
+        .private-features {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        .private-feature {
+            text-align: center;
+        }
+        .private-feature-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--gold);
+            display: block;
+        }
+        .private-feature-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ─── LOCATION ─── */
+        .location-section { background: var(--warm-white); }
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .location-map {
+            aspect-ratio: 4/3;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .location-map::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .location-map-inner {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        .location-pin {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .location-map-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--brown);
+        }
+        .location-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 400;
+            color: var(--brown);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+        .location-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .location-detail {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .location-icon {
+            width: 40px; height: 40px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .location-detail-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ember);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        .location-detail-value {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            padding: 5rem 4rem 2.5rem;
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 2rem;
+        }
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        .footer-brand span { color: var(--ember); }
+        .footer-tagline {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .social-btn {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .social-btn:hover { border-color: var(--ember); color: var(--ember); }
+        .footer-col-title {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            font-weight: 500;
+            margin-bottom: 1.25rem;
+        }
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .footer-links a {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        .footer-links a:hover { color: var(--ember); }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-copy {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 0.05em;
+        }
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-legal a {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.25);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+        /* ─── SCROLL ANIMATIONS ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            nav { padding: 1rem 2rem; }
+            nav.scrolled { padding: 0.85rem 2rem; }
+            .section { padding: 5rem 2rem; }
+            .about-grid, .chef-grid, .reservations-grid,
+            .location-grid, .ambience-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .about-img-wrap { max-width: 500px; }
+            .about-badge { left: 0; }
+            .chef-img-wrap { order: 0; }
+            .chef-quote-card { left: 0; }
+            .dishes-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-item:nth-child(1) { grid-column: span 2; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .story-strip { flex-wrap: wrap; gap: 1.5rem; padding: 1.25rem 2rem; }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .dishes-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .private-features { flex-wrap: wrap; gap: 2rem; }
+            .footer-top { grid-template-columns: 1fr; }
+            .menu-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .gallery-header { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="nav-logo">Ember <span>&</span> Rye</div>
+        <ul class="nav-links">
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#chef">Chef</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#location">Visit</a></li>
+            <li><a href="#reservations" class="nav-reserve">Reserve a Table</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=85&fit=crop" alt="Restaurant hero" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">Modern American Kitchen</div>
+            <h1 class="hero-title">Where <em>Fire</em><br>Meets Flavor</h1>
+            <p class="hero-sub">Craft ingredients. Open-flame cooking. An unforgettable dining experience.</p>
+            <div class="hero-actions">
+                <a href="#reservations" class="btn-primary">Reserve a Table</a>
+                <a href="#menu" class="btn-outline">View Menu</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            Scroll
+        </div>
+    </section>
+
+    <!-- STORY STRIP -->
+    <div class="story-strip">
+        <div class="strip-item"><div class="strip-dot"></div> Open Since 2018</div>
+        <div class="strip-item"><div class="strip-dot"></div> Award-Winning Kitchen</div>
+        <div class="strip-item"><div class="strip-dot"></div> Locally Sourced Ingredients</div>
+        <div class="strip-item"><div class="strip-dot"></div> Private Dining Available</div>
+        <div class="strip-item"><div class="strip-dot"></div> Reservations Recommended</div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img-wrap reveal">
+                    <img class="about-img" src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=700&q=80&fit=crop" alt="Restaurant interior">
+                    <img class="about-img-accent" src="https://images.unsplash.com/photo-1493770348161-369560ae357d?w=400&q=80&fit=crop" alt="Food detail">
+                    <div class="about-badge">
+                        <span class="about-badge-num">6</span>
+                        <span class="about-badge-label">Years of Excellence</span>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <div class="eyebrow">Our Story</div>
+                    <h2 class="about-title">Crafted with <em>Passion</em>, Served with Purpose</h2>
+                    <p class="about-text">Ember & Rye was born from a simple belief: that great food should tell a story. Nestled in the heart of the city, we've been bringing people together around live-fire cooking and seasonal ingredients since 2018.</p>
+                    <p class="about-text">Every dish is a conversation between the land and the flame — slow-cooked, wood-smoked, and finished with the care of a kitchen that genuinely loves what it does.</p>
+                    <div class="about-details">
+                        <div>
+                            <div class="about-detail-label">Cuisine</div>
+                            <div class="about-detail-value">Modern American</div>
+                        </div>
+                        <div>
+                            <div class="about-detail-label">Dress Code</div>
+                            <div class="about-detail-value">Smart Casual</div>
+                        </div>
+                        <div>
+                            <div class="about-detail-label">Capacity</div>
+                            <div class="about-detail-value">80 Guests</div>
+                        </div>
+                        <div>
+                            <div class="about-detail-label">Private Rooms</div>
+                            <div class="about-detail-value">Up to 24 Guests</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section class="section menu-section" id="menu">
+        <div class="container">
+            <div class="menu-header">
+                <div class="reveal">
+                    <div class="eyebrow">Seasonal Offerings</div>
+                    <h2 class="section-title">Our <em>Signature</em> Dishes</h2>
+                </div>
+                <div class="menu-tabs reveal reveal-delay-1">
+                    <button class="tab-btn active">Mains</button>
+                    <button class="tab-btn">Starters</button>
+                    <button class="tab-btn">Desserts</button>
+                    <button class="tab-btn">Drinks</button>
+                </div>
+            </div>
+            <div class="dishes-grid">
+                <div class="dish-card reveal">
+                    <div class="dish-img-wrap">
+                        <img class="dish-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80&fit=crop" alt="Ember-Smoked Ribeye">
+                        <span class="dish-tag">Chef's Choice</span>
+                    </div>
+                    <div class="dish-info">
+                        <div class="dish-name">Ember-Smoked Ribeye</div>
+                        <div class="dish-desc">28-day dry-aged prime rib, wood-ember crust, bone marrow butter, roasted garlic jus, seasonal greens.</div>
+                        <div class="dish-footer">
+                            <span class="dish-price">$58</span>
+                            <span class="dish-allergens">GF · Contains Dairy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dish-card reveal reveal-delay-1">
+                    <div class="dish-img-wrap">
+                        <img class="dish-img" src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80&fit=crop" alt="Wood-Roasted Salmon">
+                        <span class="dish-tag">Seasonal</span>
+                    </div>
+                    <div class="dish-info">
+                        <div class="dish-name">Wood-Roasted Salmon</div>
+                        <div class="dish-desc">Atlantic salmon over cedar plank, citrus-herb beurre blanc, wild rice pilaf, charred lemon.</div>
+                        <div class="dish-footer">
+                            <span class="dish-price">$42</span>
+                            <span class="dish-allergens">GF · Contains Fish</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dish-card reveal reveal-delay-2">
+                    <div class="dish-img-wrap">
+                        <img class="dish-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80&fit=crop" alt="Rye & Heritage Pork">
+                        <span class="dish-tag">New</span>
+                    </div>
+                    <div class="dish-info">
+                        <div class="dish-name">Heritage Pork Chop</div>
+                        <div class="dish-desc">Berkshire pork, rye whiskey glaze, smoked apple purée, crispy sage, roasted fingerling potatoes.</div>
+                        <div class="dish-footer">
+                            <span class="dish-price">$46</span>
+                            <span class="dish-allergens">Contains Gluten</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-cta reveal">
+                <a href="#" class="btn-primary" style="margin-top:1rem;">View Full Menu →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AMBIENCE -->
+    <div class="ambience-section">
+        <div class="ambience-grid">
+            <div class="ambience-img-side">
+                <img class="ambience-img" src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=900&q=80&fit=crop" alt="Restaurant ambience">
+            </div>
+            <div class="ambience-content reveal">
+                <div class="eyebrow" style="color:var(--gold);">The Experience</div>
+                <h2 class="ambience-title">More Than a Meal — <em>A Memory</em></h2>
+                <p class="ambience-text">From the moment you walk in, Ember & Rye wraps you in warmth. Low candlelight, exposed brick, and the soft crackle of our open kitchen create an atmosphere that's intimate yet alive. We believe dining is ceremony.</p>
+                <div class="ambience-features">
+                    <div class="ambience-feature">
+                        <div class="ambience-feature-icon">🔥</div>
+                        Open Live-Fire Kitchen
+                    </div>
+                    <div class="ambience-feature">
+                        <div class="ambience-feature-icon">🍷</div>
+                        Curated Wine & Cocktail Program
+                    </div>
+                    <div class="ambience-feature">
+                        <div class="ambience-feature-icon">🎵</div>
+                        Live Jazz Every Friday & Saturday
+                    </div>
+                    <div class="ambience-feature">
+                        <div class="ambience-feature-icon">🌿</div>
+                        100% Locally Sourced Produce
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHEF -->
+    <section class="section chef-section" id="chef">
+        <div class="container">
+            <div class="chef-grid">
+                <div class="chef-content reveal">
+                    <div class="eyebrow">Behind the Pass</div>
+                    <h2 class="chef-title">Meet the <em>Chef</em></h2>
+                    <div class="chef-name">Marcus Delray</div>
+                    <div class="chef-role">Executive Chef & Co-Founder</div>
+                    <p class="chef-bio">With over 20 years cooking across New York, Paris, and Tokyo, Chef Delray returned home to open a restaurant that reflects his roots — honest, bold, fire-kissed American cooking with a global perspective.</p>
+                    <p class="chef-bio">His philosophy is simple: use what the land gives you, apply heat with intention, and let the ingredient speak.</p>
+                    <div class="chef-awards">
+                        <span class="chef-award">James Beard Semifinalist</span>
+                        <span class="chef-award">Zagat Top 10</span>
+                        <span class="chef-award">Michelin Recommended</span>
+                        <span class="chef-award">Food & Wine Best New Chef</span>
+                    </div>
+                </div>
+                <div class="chef-img-wrap reveal reveal-delay-1">
+                    <img class="chef-img" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80&fit=crop" alt="Chef Marcus Delray">
+                    <div class="chef-quote-card">
+                        <div class="chef-quote">"Cooking with fire is the most honest conversation between a chef and the earth."</div>
+                        <div class="chef-quote-attr">— Marcus Delray</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESERVATIONS -->
+    <section class="section reservations-section" id="reservations">
+        <div class="container">
+            <div class="reservations-grid">
+                <div class="reveal">
+                    <div class="eyebrow" style="color:var(--gold);">Book Your Table</div>
+                    <h2 class="reservations-title">Reserve Your <em>Evening</em></h2>
+                    <p class="reservations-text">Reservations are recommended but walk-ins are always welcome when seats are available. For parties of 8 or more, please contact us directly.</p>
+                    <ul class="hours-list">
+                        <li class="hours-item"><span class="hours-day">Monday – Tuesday</span><span>Closed</span></li>
+                        <li class="hours-item"><span class="hours-day">Wednesday – Thursday</span><span>5:00 PM – 10:00 PM</span></li>
+                        <li class="hours-item"><span class="hours-day">Friday – Saturday</span><span>5:00 PM – 11:00 PM</span></li>
+                        <li class="hours-item"><span class="hours-day">Sunday</span><span>11:00 AM – 9:00 PM</span></li>
+                        <li class="hours-item"><span class="hours-day">Sunday Brunch</span><span>11:00 AM – 3:00 PM</span></li>
+                    </ul>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <form class="reservation-form" onsubmit="handleReservation(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-input" placeholder="John">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-input" placeholder="Smith">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="john@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-input" placeholder="+1 (555) 000-0000">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Time</label>
+                                <select class="form-select form-input">
+                                    <option>5:00 PM</option>
+                                    <option>5:30 PM</option>
+                                    <option>6:00 PM</option>
+                                    <option>6:30 PM</option>
+                                    <option>7:00 PM</option>
+                                    <option>7:30 PM</option>
+                                    <option>8:00 PM</option>
+                                    <option>8:30 PM</option>
+                                    <option>9:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Party Size</label>
+                            <select class="form-select form-input">
+                                <option>1 Guest</option>
+                                <option>2 Guests</option>
+                                <option>3 Guests</option>
+                                <option>4 Guests</option>
+                                <option>5 Guests</option>
+                                <option>6 Guests</option>
+                                <option>7 Guests</option>
+                                <option>8+ Guests (Contact Us)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Special Requests</label>
+                            <input type="text" class="form-input" placeholder="Dietary needs, occasion, seating preference…">
+                        </div>
+                        <button type="submit" class="form-submit">Confirm Reservation →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-header">
+            <div class="reveal">
+                <div class="eyebrow">Moments</div>
+                <h2 class="section-title">Inside <em>Ember & Rye</em></h2>
+            </div>
+            <a href="#" class="btn-primary reveal reveal-delay-1">View All Photos</a>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img class="gallery-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80&fit=crop" alt="Gallery 1">
+                <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&fit=crop" alt="Gallery 2">
+                <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&fit=crop" alt="Gallery 3">
+                <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&fit=crop" alt="Gallery 4">
+                <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+            </div>
+            <div class="gallery-item">
+                <img class="gallery-img" src="https://images.unsplash.com/photo-1551218372-a8789b81b253?w=600&q=80&fit=crop" alt="Gallery 5">
+                <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials-section">
+        <div class="container">
+            <div class="reveal" style="text-align:center; margin-bottom:0.5rem;">
+                <div class="eyebrow" style="justify-content:center;">What Guests Say</div>
+                <h2 class="section-title">Our <em>Reviews</em></h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <div class="testimonial-quote-mark">"</div>
+                    <p class="testimonial-text">The ribeye was unlike anything I've had before. The ember crust, the jus — every element sang. We'll be back every anniversary.</p>
+                    <div class="testimonial-footer">
+                        <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face" alt="Reviewer">
+                        <div>
+                            <div class="testimonial-name">Sarah M.</div>
+                            <div class="testimonial-source">Google Reviews · 5 stars</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-1">
+                    <div class="stars">★★★★★</div>
+                    <div class="testimonial-quote-mark">"</div>
+                    <p class="testimonial-text">Michelin-quality without the pretension. The staff knew the menu inside-out and the cocktail list is brilliant. One of the best nights out this year.</p>
+                    <div class="testimonial-footer">
+                        <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Reviewer">
+                        <div>
+                            <div class="testimonial-name">James R.</div>
+                            <div class="testimonial-source">Yelp · 5 stars</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-2">
+                    <div class="stars">★★★★★</div>
+                    <div class="testimonial-quote-mark">"</div>
+                    <p class="testimonial-text">We hosted a private dinner for 20 people and the team was absolutely incredible. Seamless, personal, and the food was stunning course after course.</p>
+                    <div class="testimonial-footer">
+                        <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face" alt="Reviewer">
+                        <div>
+                            <div class="testimonial-name">Priya K.</div>
+                            <div class="testimonial-source">OpenTable · 5 stars</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRIVATE DINING -->
+    <section class="section private-section">
+        <div class="private-bg"></div>
+        <div class="container">
+            <div class="private-content reveal">
+                <div class="eyebrow" style="color:var(--gold); justify-content:center;">Exclusive Events</div>
+                <h2 class="private-title">Private <em>Dining</em> & Events</h2>
+                <p class="private-text">Whether it's an intimate birthday, a corporate dinner, or a rehearsal celebration, our private dining room offers a fully tailored experience — curated menus, dedicated staff, and a space that makes every occasion feel extraordinary.</p>
+                <div class="private-features">
+                    <div class="private-feature">
+                        <span class="private-feature-num">24</span>
+                        <span class="private-feature-label">Max Guests</span>
+                    </div>
+                    <div class="private-feature">
+                        <span class="private-feature-num">6</span>
+                        <span class="private-feature-label">Set Menus</span>
+                    </div>
+                    <div class="private-feature">
+                        <span class="private-feature-num">AV</span>
+                        <span class="private-feature-label">Equipped</span>
+                    </div>
+                </div>
+                <a href="#reservations" class="btn-primary">Enquire About Private Dining</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="section location-section" id="location">
+        <div class="container">
+            <div class="location-grid">
+                <div class="location-map reveal">
+                    <div class="location-map-inner">
+                        <span class="location-pin">📍</span>
+                        <div class="location-map-label">Ember & Rye<br><small style="color:var(--muted); font-size:0.8rem;">142 West 14th Street, NYC</small></div>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-1">
+                    <div class="eyebrow">Find Us</div>
+                    <h2 class="location-title">Come Visit Us in the Heart of the City</h2>
+                    <div class="location-details">
+                        <div class="location-detail">
+                            <div class="location-icon">📍</div>
+                            <div>
+                                <div class="location-detail-label">Address</div>
+                                <div class="location-detail-value">142 West 14th Street<br>New York, NY 10011</div>
+                            </div>
+                        </div>
+                        <div class="location-detail">
+                            <div class="location-icon">📞</div>
+                            <div>
+                                <div class="location-detail-label">Phone & Email</div>
+                                <div class="location-detail-value">+1 (212) 555-0183<br>hello@emberandrye.com</div>
+                            </div>
+                        </div>
+                        <div class="location-detail">
+                            <div class="location-icon">🚇</div>
+                            <div>
+                                <div class="location-detail-label">Getting Here</div>
+                                <div class="location-detail-value">1/2/3 to 14th St · L to 8th Ave<br>Street parking available after 6pm</div>
+                            </div>
+                        </div>
+                        <div class="location-detail">
+                            <div class="location-icon">🅿️</div>
+                            <div>
+                                <div class="location-detail-label">Parking</div>
+                                <div class="location-detail-value">Valet available Thu–Sat from 6pm<br>Nearby garage on 15th & 9th</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-brand">Ember <span>&</span> Rye</div>
+                <p class="footer-tagline">A modern American kitchen dedicated to live-fire cooking, seasonal ingredients, and the art of gathering around a table.</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-btn">ig</a>
+                    <a href="#" class="social-btn">fb</a>
+                    <a href="#" class="social-btn">tw</a>
+                    <a href="#" class="social-btn">yt</a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Navigate</div>
+                <ul class="footer-links">
+                    <li><a href="#about">Our Story</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#chef">The Chef</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#reservations">Reservations</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-col-title">Dining</div>
+                <ul class="footer-links">
+                    <li><a href="#">Dinner Menu</a></li>
+                    <li><a href="#">Sunday Brunch</a></li>
+                    <li><a href="#">Cocktail List</a></li>
+                    <li><a href="#">Wine Program</a></li>
+                    <li><a href="#">Private Events</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-col-title">Info</div>
+                <ul class="footer-links">
+                    <li><a href="#">Gift Cards</a></li>
+                    <li><a href="#">Press & Media</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 Ember & Rye. All rights reserved.</div>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Settings</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Nav scroll behavior
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+
+        // Menu tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Reservation form
+        function handleReservation(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.form-submit');
+            btn.textContent = '✓ Reservation Confirmed!';
+            btn.style.background = '#2a7a3a';
+            setTimeout(() => {
+                btn.textContent = 'Confirm Reservation →';
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

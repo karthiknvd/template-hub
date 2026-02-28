@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - The Future of Web Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #1c1c1a;
+            --warm-white: #faf8f4;
+            --cream: #f0ebe1;
+            --terracotta: #c4572a;
+            --gold: #b8953a;
+            --slate: #6b6b65;
+            --rule: #d8d3c8;
+        }
+
+        body { margin: 0; padding: 0; }
+
+        .article-bg {
+            font-family: 'Jost', sans-serif;
+            background: var(--warm-white);
+            color: var(--ink);
+        }
+
+        /* TOP NAV BAR */
+        .top-bar {
+            border-bottom: 1px solid var(--rule);
+            padding: 0.6rem 0;
+        }
+        .top-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .pub-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        .pub-date {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+        .pub-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .pub-nav a {
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--slate);
+            transition: color 0.2s;
+        }
+        .pub-nav a:hover { color: var(--terracotta); }
+
+        /* HERO FEATURE */
+        .article-hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: end;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 3rem;
+        }
+
+        .hero-text { order: 1; }
+
+        .category-pill {
+            display: inline-block;
+            background: var(--terracotta);
+            color: var(--warm-white);
+            font-size: 0.62rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            margin-bottom: 1.75rem;
+        }
+
+        #articleTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            color: var(--ink);
+        }
+
+        #articleSubtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--slate);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--terracotta);
+            padding-left: 1rem;
+        }
+
+        .article-byline {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--rule);
+        }
+
+        #authorAvatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .byline-text { font-size: 0.82rem; }
+        #authorName { font-weight: 600; }
+        .byline-meta {
+            color: var(--slate);
+            font-size: 0.75rem;
+            margin-top: 0.15rem;
+        }
+
+        .hero-image-wrap {
+            order: 2;
+            position: relative;
+            margin-bottom: 12px;
+            margin-right: 12px;
+        }
+        .hero-image-wrap::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--rule);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        #featuredImage {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        #imageCaption {
+            font-size: 0.72rem;
+            color: var(--slate);
+            margin-top: 0.75rem;
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+
+        /* ARTICLE BODY */
+        .article-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 260px;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        /* DROP CAP first paragraph */
+        #paragraph1::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            float: left;
+            line-height: 0.8;
+            padding: 0.15em 0.1em 0 0;
+            color: var(--terracotta);
+        }
+
+        .article-body p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            line-height: 1.85;
+            margin-bottom: 1.75rem;
+            color: #2d2d2a;
+        }
+
+        .article-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 3rem 0 1.25rem;
+            color: var(--ink);
+            border-top: 2px solid var(--ink);
+            padding-top: 1.25rem;
+        }
+        .article-body h2 em { color: var(--terracotta); font-style: italic; }
+
+        .pull-quote {
+            margin: 2.5rem -1rem;
+            padding: 2.5rem;
+            background: var(--cream);
+            border-left: 4px solid var(--terracotta);
+            position: relative;
+        }
+        .pull-quote::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            color: var(--terracotta);
+            opacity: 0.2;
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            line-height: 1;
+        }
+
+        .pull-quote p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem !important;
+            line-height: 1.5 !important;
+            font-style: italic;
+            color: var(--ink) !important;
+            margin: 0 !important;
+        }
+
+        /* SIDEBAR */
+        .article-sidebar { position: sticky; top: 2rem; }
+
+        .sidebar-widget {
+            border: 1px solid var(--rule);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .widget-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--terracotta);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .widget-stat {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--rule);
+            color: var(--slate);
+        }
+        .widget-stat:last-child { border-bottom: none; }
+        .widget-stat strong { color: var(--ink); }
+
+        .widget-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .widget-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            padding: 0.3rem 0.75rem;
+            border: 1px solid var(--rule);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .widget-tag:hover { background: var(--ink); color: var(--warm-white); }
+
+        .share-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--ink);
+            background: transparent;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+        .share-btn:hover { background: var(--ink); color: var(--warm-white); }
+        .share-btn.filled {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: var(--warm-white);
+        }
+        .share-btn.filled:hover { background: #a84520; }
+
+        /* RELATED */
+        .related-section {
+            background: var(--cream);
+            border-top: 2px solid var(--ink);
+        }
+        .related-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .related-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        #relatedTitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .view-all {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            text-decoration: none;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .related-card {
+            cursor: pointer;
+        }
+
+        .related-image-wrap {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+        }
+
+        .related-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+            filter: saturate(0.85);
+        }
+        .related-card:hover .related-image { transform: scale(1.05); filter: saturate(1); }
+
+        .related-cat {
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+            transition: color 0.2s;
+        }
+        .related-card:hover .related-card-title { color: var(--terracotta); }
+
+        .related-excerpt {
+            font-size: 0.85rem;
+            color: var(--slate);
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--ink);
+            color: var(--warm-white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .footer-pub {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        .footer-sub {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(250,248,244,0.4);
+        }
+
+        @media (max-width: 900px) {
+            .article-hero { grid-template-columns: 1fr; gap: 2rem; }
+            .article-layout { grid-template-columns: 1fr; }
+            .article-sidebar { position: static; }
+            .related-grid { grid-template-columns: 1fr; }
+            .pub-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="article-bg">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="pub-date">February 2026</div>
+            <div class="pub-name">The Design Review</div>
+            <ul class="pub-nav">
+                <li><a href="#">Design</a></li>
+                <li><a href="#">Technology</a></li>
+                <li><a href="#">Culture</a></li>
+                <li><a href="#">Subscribe</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="article-hero">
+        <div class="hero-text">
+            <span id="articleCategory" class="category-pill">Design</span>
+            <h1 id="articleTitle">The Future of Web Design: Trends to Watch in 2026</h1>
+            <p id="articleSubtitle">Exploring the innovative approaches shaping the digital landscape and how designers are redefining what's possible.</p>
+            <div class="article-byline">
+                <img id="authorAvatar" src="data:image/svg+xml,%3Csvg width='44' height='44' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='22' cy='22' r='22' fill='%23c4572a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='18' fill='white' font-family='Georgia'%3EA%3C/text%3E%3C/svg%3E" alt="Author">
+                <div>
+                    <div class="byline-text"><strong id="authorName">Alex Rivera</strong></div>
+                    <div class="byline-meta">
+                        <span id="publishDate">February 9, 2026</span> &nbsp;·&nbsp;
+                        <span id="readTime">8 min read</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image-wrap">
+            <img id="featuredImage" src="data:image/svg+xml,%3Csvg width='800' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23c4572a'/%3E%3Cstop offset='100%25' stop-color='%231c1c1a'/%3E%3C/linearGradient%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='40' fill='rgba(250,248,244,0.5)' font-family='Georgia' font-style='italic'%3EFeatured Image%3C/text%3E%3C/svg%3E" alt="Featured">
+            <p id="imageCaption">Modern web design combines aesthetics with functionality — photo by Studio Contrast</p>
+        </div>
+    </div>
+
+    <!-- ARTICLE BODY + SIDEBAR -->
+    <div class="article-layout">
+        <article class="article-body">
+            <p id="paragraph1">The web design landscape is constantly evolving, driven by technological advancements, changing user expectations, and innovative creative approaches. As we progress through 2026, several key trends are emerging that will shape how we create and experience digital content.</p>
+
+            <p id="paragraph2">From AI-powered design tools to immersive 3D experiences, the boundaries of what's possible on the web continue to expand. These innovations aren't just about aesthetics—they're fundamentally changing how users interact with digital products and how businesses connect with their audiences.</p>
+
+            <h2 id="heading1">Minimalism Meets <em>Maximalism</em></h2>
+
+            <p id="paragraph3">One of the most fascinating trends we're seeing is the convergence of minimalist and maximalist design philosophies. Designers are finding creative ways to combine clean, uncluttered interfaces with bold, expressive elements that capture attention and convey personality.</p>
+
+            <p id="paragraph4">This hybrid approach allows websites to maintain usability and clarity while still making strong visual statements. The key is knowing when to embrace simplicity and when to add complexity for impact.</p>
+
+            <div class="pull-quote">
+                <p id="quote1">Good design is about finding the perfect balance between form and function, between restraint and expression.</p>
+            </div>
+
+            <h2 id="heading2">The Rise of <em>Personalization</em></h2>
+
+            <p id="paragraph5">Modern web experiences are becoming increasingly personalized, adapting to individual user preferences, behaviors, and contexts. This shift is powered by advances in machine learning and data analytics, enabling websites to deliver tailored content and interfaces.</p>
+
+            <p id="paragraph6">However, with great power comes great responsibility. Designers and developers must balance personalization with privacy, ensuring that customized experiences don't come at the cost of user trust and data security.</p>
+
+            <h2 id="heading3"><em>Sustainability</em> in Design</h2>
+
+            <p id="paragraph7">As awareness of digital carbon footprints grows, sustainable web design is moving from a niche concern to a mainstream priority. This includes optimizing performance, reducing unnecessary features, and making conscious choices about hosting and infrastructure.</p>
+
+            <p id="paragraph8">The future of web design isn't just about creating beautiful, functional experiences—it's about doing so in a way that's environmentally responsible and sustainable for the long term.</p>
+        </article>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <div class="widget-label">Article Info</div>
+                <div class="widget-stat">
+                    <span>Published</span>
+                    <strong>Feb 9, 2026</strong>
+                </div>
+                <div class="widget-stat">
+                    <span>Reading Time</span>
+                    <strong>8 minutes</strong>
+                </div>
+                <div class="widget-stat">
+                    <span>Category</span>
+                    <strong>Design</strong>
+                </div>
+                <div class="widget-stat">
+                    <span>Words</span>
+                    <strong>1,240</strong>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <div class="widget-label">Share</div>
+                <button class="share-btn filled">↗ Twitter / X</button>
+                <button class="share-btn">in LinkedIn</button>
+                <button class="share-btn">⧉ Copy Link</button>
+            </div>
+
+            <div class="sidebar-widget">
+                <div class="widget-label">Topics</div>
+                <div class="widget-tags">
+                    <span class="widget-tag">Design</span>
+                    <span class="widget-tag">UX</span>
+                    <span class="widget-tag">Trends</span>
+                    <span class="widget-tag">Typography</span>
+                    <span class="widget-tag">2026</span>
+                    <span class="widget-tag">CSS</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- RELATED -->
+    <section class="related-section">
+        <div class="related-inner">
+            <div class="related-header">
+                <h2 id="relatedTitle">More to Read</h2>
+                <a href="#" class="view-all">View All Articles →</a>
+            </div>
+            <div class="related-grid">
+                <div class="related-card">
+                    <div class="related-image-wrap">
+                        <img id="related1Image" class="related-image" src="data:image/svg+xml,%3Csvg width='400' height='250' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='400' height='250' fill='%231a2e4a'/%3E%3C/svg%3E" alt="Related 1">
+                    </div>
+                    <div class="related-cat">Development</div>
+                    <h3 id="related1Title" class="related-card-title">Mastering CSS Grid Layout</h3>
+                    <p id="related1Excerpt" class="related-excerpt">A comprehensive guide to building responsive layouts with CSS Grid.</p>
+                </div>
+                <div class="related-card">
+                    <div class="related-image-wrap">
+                        <img id="related2Image" class="related-image" src="data:image/svg+xml,%3Csvg width='400' height='250' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='400' height='250' fill='%23764ba2'/%3E%3C/svg%3E" alt="Related 2">
+                    </div>
+                    <div class="related-cat">Accessibility</div>
+                    <h3 id="related2Title" class="related-card-title">Accessibility Best Practices</h3>
+                    <p id="related2Excerpt" class="related-excerpt">Creating inclusive web experiences for all users.</p>
+                </div>
+                <div class="related-card">
+                    <div class="related-image-wrap">
+                        <img id="related3Image" class="related-image" src="data:image/svg+xml,%3Csvg width='400' height='250' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='400' height='250' fill='%23c4572a'/%3E%3C/svg%3E" alt="Related 3">
+                    </div>
+                    <div class="related-cat">Performance</div>
+                    <h3 id="related3Title" class="related-card-title">Animation Performance Tips</h3>
+                    <p id="related3Excerpt" class="related-excerpt">Optimizing web animations for smooth, butter-like performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-pub">The Design Review</div>
+        <div class="footer-sub">Thoughtful writing about the future of design</div>
+    </footer>
+
+</div><!-- /.article-bg -->
+</body>
+</html>

@@ -28,6 +28,7 @@ It includes portfolio, resume, startup, restaurant, event, wedding, gym, clinic,
 
 ## 📁 Folder Structure
 
+```
 TEMPLATE-HUB
 │
 ├── .dist
@@ -59,6 +60,7 @@ TEMPLATE-HUB
 ├── index.html
 ├── index.js
 └── style.css
+```
 
 ---
 
